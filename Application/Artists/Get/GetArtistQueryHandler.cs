@@ -1,4 +1,5 @@
-﻿using Application.Data;
+﻿using Application.Common;
+using Application.Data;
 using Domain.Abstractions;
 using Domain.Exceptions;
 using MediatR;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Artists.Get;
 
-public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, ArtistResponse>
+public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Result<ArtistResponse>>
 {
     private readonly IApplicationDbContext _context;
 
@@ -16,7 +17,7 @@ public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Artis
     }
 
 
-    public async Task<ArtistResponse> Handle(GetArtistQuery request, CancellationToken cancellationToken)
+    public async Task<Result<ArtistResponse>> Handle(GetArtistQuery request, CancellationToken cancellationToken)
     {
         var artist = await _context.Artists
             .Where(a => a.Id == request.Id)
@@ -25,7 +26,7 @@ public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Artis
 
         if (artist is null)
         {
-            throw new ArtistNotFoundException(request.Id);
+            return new ArtistNotFoundException(request.Id.ToString());
         }
 
         return artist;

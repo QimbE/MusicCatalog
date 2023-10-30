@@ -1,4 +1,5 @@
-﻿using Application.Data;
+﻿using Application.Common;
+using Application.Data;
 using Domain.Abstractions;
 using Domain.Entities;
 using Domain.Exceptions;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace Application.Artists.Create;
 
-public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCommand>
+public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCommand, Result<Guid>>
 {
     private readonly IArtistRepository _artistRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -17,7 +18,7 @@ public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCom
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(CreateArtistCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateArtistCommand request, CancellationToken cancellationToken)
     {
         var artist = new Artist(Guid.NewGuid(), request.Name, request.Description);
 
@@ -25,11 +26,13 @@ public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCom
 
         if (artistWithTheSameName is not null)
         {
-            throw new ArtistWithTheSameNameException(request.Name);
+            return new ArtistWithTheSameNameException(request.Name);
         }
         
         _artistRepository.Add(artist);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return artist.Id;
     }
 }

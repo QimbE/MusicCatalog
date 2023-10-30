@@ -1,5 +1,6 @@
-﻿using MediatR;
+﻿using Application.Common;
+using MediatR;
 
 namespace Application.Artists.Delete;
 
-public record DeleteArtistCommand(Guid Id) : IRequest;
+public record DeleteArtistCommand(Guid Id) : IRequest<Result<bool>>;

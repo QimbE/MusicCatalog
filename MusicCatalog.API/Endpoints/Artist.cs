@@ -2,6 +2,7 @@
 using Application.Artists.Delete;
 using Application.Artists.Get;
 using Application.Artists.Update;
+using Application.ExpectedErrorHandling;
 using Carter;
 using Domain.Exceptions;
 using MediatR;
@@ -15,66 +16,44 @@ public class Artist : ICarterModule
     {
         app.MapPost("artists", async ([FromBody] CreateArtistCommand command, ISender sender) =>
         {
-            try
-            {
-                await sender.Send(command);
-            
-                return Results.Ok();
-            }
-            catch (ArtistWithTheSameNameException e)
-            {
-                return Results.BadRequest(e.Message);
-            }
+            var result = await sender.Send(command);
+
+            return await result.MatchAsync<IResult>(
+                res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
+                errors => sender.Send(new HandleErrorQuery(errors))
+                );
         });
 
         app.MapGet("artists/{id:guid}", async ([FromRoute] Guid id, ISender sender) =>
         {
-            try
-            {
-                var result = await sender.Send(new GetArtistQuery(id));
+            var result = await sender.Send(new GetArtistQuery(id));
 
-                return Results.Ok(new { Message = "Success", Data = result });
-            }
-            catch (ArtistNotFoundException e)
-            {
-                return Results.NotFound(e.Message);
-            }
-            
+            return await result.MatchAsync<IResult>(
+                res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
+                errors => sender.Send(new HandleErrorQuery(errors))
+            );
         });
 
         app.MapPut("artists/{id:guid}", async ([FromRoute] Guid id, [FromBody] UpdateArtistRequest request, ISender sender) =>
-        {
-            try
             {
                 var command = new UpdateArtistCommand(id, request.Name, request.Description);
 
-                await sender.Send(command);
+                var result = await sender.Send(command);
 
-                return Results.Ok();
-            }
-            catch (ArtistNotFoundException e)
-            {
-                return Results.NotFound(e.Message);
-            }
-            catch (ArtistWithTheSameNameException e)
-            {
-                return Results.BadRequest(e.Message);
-            }
-            
-        });
+                return await result.MatchAsync<IResult>(
+                    res => Task.FromResult(Results.Ok(new {Message = "Success"})),
+                    errors => sender.Send(new HandleErrorQuery(errors))
+                );
+            });
 
         app.MapDelete("artists/{id:guid}", async ([FromRoute] Guid id, ISender sender) =>
         {
-            try
-            {
-                await sender.Send(new DeleteArtistCommand(id));
-            
-                return Results.NoContent();
-            }
-            catch (ArtistNotFoundException e)
-            {
-                return Results.NotFound(e.Message);
-            }
+            var result = await sender.Send(new DeleteArtistCommand(id));
+
+            return await result.MatchAsync<IResult>(
+                res => Task.FromResult(Results.Ok(new {Message = "Success"})),
+                errors => sender.Send(new HandleErrorQuery(errors))
+            );
         });
     }
 }
