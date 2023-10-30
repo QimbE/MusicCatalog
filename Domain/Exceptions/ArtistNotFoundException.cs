@@ -1,9 +1,18 @@
-﻿namespace Domain.Exceptions;
+﻿using Domain.Exceptions.Base;
 
-public sealed class ArtistNotFoundException : Exception
+namespace Domain.Exceptions;
+
+public sealed class ArtistNotFoundException : NotFoundException
 {
-    public ArtistNotFoundException(Guid id)
-        :base($"The product with the Id = {id} was not found.")
+    private const string EntityName = "Artist";
+    public ArtistNotFoundException(string propertyName)
+        :base(EntityName, propertyName)
+    {
+        
+    }
+    
+    public ArtistNotFoundException(string propertyName, Exception inner)
+        :base(EntityName, propertyName, inner)
     {
         
     }
