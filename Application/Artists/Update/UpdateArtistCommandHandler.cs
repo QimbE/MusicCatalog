@@ -26,9 +26,7 @@ public sealed class UpdateArtistCommandHandler: IRequestHandler<UpdateArtistComm
            return new ArtistNotFoundException(request.Id.ToString());
         }
 
-        var artistWithTheSameName = _artistRepository.GetArtistByNameAsync(request.Name);
-
-        if (artistWithTheSameName is not null)
+        if (await _artistRepository.Any(a=> a.Name == request.Name))
         {
             return new ArtistWithTheSameNameException(request.Name);
         }
