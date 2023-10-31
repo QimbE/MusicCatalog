@@ -14,7 +14,9 @@ public class Artist : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("artists", async ([FromBody] CreateArtistCommand command, ISender sender) =>
+        var group = app.MapGroup("artists");
+        
+        group.MapPost("", async ([FromBody] CreateArtistCommand command, ISender sender) =>
         {
             var result = await sender.Send(command);
 
@@ -24,7 +26,7 @@ public class Artist : ICarterModule
                 );
         });
 
-        app.MapGet("artists/{id:guid}", async ([FromRoute] Guid id, ISender sender) =>
+        group.MapGet("{id:guid}", async ([FromRoute] Guid id, ISender sender) =>
         {
             var result = await sender.Send(new GetArtistQuery(id));
 
@@ -34,7 +36,7 @@ public class Artist : ICarterModule
             );
         });
 
-        app.MapPut("artists/{id:guid}", async ([FromRoute] Guid id, [FromBody] UpdateArtistRequest request, ISender sender) =>
+        group.MapPut("{id:guid}", async ([FromRoute] Guid id, [FromBody] UpdateArtistRequest request, ISender sender) =>
             {
                 var command = new UpdateArtistCommand(id, request.Name, request.Description);
 
@@ -46,7 +48,7 @@ public class Artist : ICarterModule
                 );
             });
 
-        app.MapDelete("artists/{id:guid}", async ([FromRoute] Guid id, ISender sender) =>
+        group.MapDelete("{id:guid}", async ([FromRoute] Guid id, ISender sender) =>
         {
             var result = await sender.Send(new DeleteArtistCommand(id));
 
