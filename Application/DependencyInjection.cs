@@ -1,4 +1,5 @@
 ﻿using Application.Behaviors;
+using Application.Common;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,6 +10,8 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         var assembly = typeof(DependencyInjection).Assembly;
+        
+        services.AddSingleton<Mapper, Mapper>();
         
         services.AddMediatR(configuration =>
             {
