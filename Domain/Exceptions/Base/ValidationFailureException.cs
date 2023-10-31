@@ -44,7 +44,6 @@ public class ValidationError
         PropertyName = propertyName;
         ErrorMessage = errorMessage;
     }
-
     public override string ToString()
     {
         return ErrorMessage;
