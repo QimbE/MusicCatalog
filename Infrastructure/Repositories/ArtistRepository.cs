@@ -1,4 +1,5 @@
-﻿using Domain.Abstractions;
+﻿using System.Linq.Expressions;
+using Domain.Abstractions;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,11 @@ internal sealed class ArtistRepository : IArtistRepository
     {
         return _context.Artists
             .SingleOrDefaultAsync(a => a.Name == name);
+    }
+
+    public Task<bool> Any(Expression<Func<Artist, bool>> expression)
+    {
+        return _context.Artists.AnyAsync(expression);
     }
 
     public void Add(Artist artist)
