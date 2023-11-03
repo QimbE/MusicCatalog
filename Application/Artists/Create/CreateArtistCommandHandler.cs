@@ -20,12 +20,12 @@ public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCom
 
     public async Task<Result<Guid>> Handle(CreateArtistCommand request, CancellationToken cancellationToken)
     {
-        var artist = new Artist(Guid.NewGuid(), request.Name, request.Description);
-        
         if (await _artistRepository.Any(a=> a.Name == request.Name))
         {
             return new ArtistWithTheSameNameException(request.Name);
         }
+        
+        var artist = Artist.Create(request.Name, request.Description);
         
         _artistRepository.Add(artist);
 
