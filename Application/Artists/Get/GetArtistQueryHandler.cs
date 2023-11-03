@@ -27,7 +27,7 @@ public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Resul
 
         if (artist is null)
         {
-            return new ArtistNotFoundException(request.Id.ToString());
+            return new ArtistNotFoundException(nameof(request.Id));
         }
 
         return artist;

@@ -8,9 +8,9 @@ public class ValidationFailureException: ValidationException
     /// <summary>
     /// Collection of validation errors
     /// </summary>
-    public IEnumerable<ValidationError> Errors { get; protected set; }
+    public IEnumerable<PropertyError> Errors { get; protected set; }
     
-    public ValidationFailureException(IEnumerable<ValidationError> errors) 
+    public ValidationFailureException(IEnumerable<PropertyError> errors) 
         :base(BuildErrorMessage(errors))
     {
         Errors = errors;
@@ -20,7 +20,7 @@ public class ValidationFailureException: ValidationException
     /// </summary>
     /// <param name="errors"></param>
     /// <returns></returns>
-    private static string BuildErrorMessage(IEnumerable<ValidationError> errors)
+    private static string BuildErrorMessage(IEnumerable<PropertyError> errors)
     {
         var arr = errors.Select(x => $"{Environment.NewLine} -- {x.PropertyName}: {x.ErrorMessage}");
         return "Validation failed: " + string.Join(string.Empty, arr);
@@ -28,18 +28,18 @@ public class ValidationFailureException: ValidationException
 }
 
 [Serializable]
-public class ValidationError
+public class PropertyError
 {
     public string PropertyName { get; set; }
     
     public string ErrorMessage { get; set; }
     
-    public ValidationError()
+    public PropertyError()
     {
         
     }
 
-    public ValidationError(string propertyName, string errorMessage)
+    public PropertyError(string propertyName, string errorMessage)
     {
         PropertyName = propertyName;
         ErrorMessage = errorMessage;

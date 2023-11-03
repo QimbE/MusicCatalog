@@ -7,5 +7,5 @@ namespace Application.Common;
 [Mapper]
 public partial class Mapper
 {
-    public partial IEnumerable<ValidationError> MapToErrors(IEnumerable<ValidationFailure> failures);
+    public partial IEnumerable<PropertyError> MapToErrors(IEnumerable<ValidationFailure> failures);
 }

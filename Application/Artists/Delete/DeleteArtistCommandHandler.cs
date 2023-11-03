@@ -24,7 +24,7 @@ public sealed class DeleteArtistCommandHandler : IRequestHandler<DeleteArtistCom
 
         if (artist is null)
         {
-            return new ArtistNotFoundException(request.Id.ToString());
+            return new ArtistNotFoundException(nameof(request.Id));
         }
 
         _artistRepository.Remove(artist);
