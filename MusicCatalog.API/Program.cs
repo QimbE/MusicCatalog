@@ -1,6 +1,7 @@
 using Application;
 using Carter;
 using Infrastructure;
+using Presentation;
 using Serilog;
 
 namespace MusicCatalog.API;

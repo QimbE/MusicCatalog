@@ -4,11 +4,13 @@ using Application.Artists.Get;
 using Application.Artists.Update;
 using Application.ExpectedErrorHandling;
 using Carter;
-using Domain.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
-namespace MusicCatalog.API.Endpoints;
+namespace Presentation.Endpoints;
 
 public class Artist : ICarterModule
 {

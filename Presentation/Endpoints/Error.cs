@@ -1,8 +1,12 @@
 ﻿using Carter;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 
-namespace MusicCatalog.API.Endpoints;
+namespace Presentation.Endpoints;
 
 public class Error:ICarterModule
 {

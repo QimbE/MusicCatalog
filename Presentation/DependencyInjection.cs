@@ -1,6 +1,7 @@
 ﻿using Carter;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace MusicCatalog.API;
+namespace Presentation;
 
 public static class DependencyInjection
 {
