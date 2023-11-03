@@ -1,5 +1,5 @@
 ﻿using Application.Data;
-using Domain.Entities;
+using Domain.Artists;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;

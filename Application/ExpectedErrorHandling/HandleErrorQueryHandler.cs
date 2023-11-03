@@ -1,5 +1,6 @@
-﻿using Domain.Exceptions;
-using Domain.Exceptions.Base;
+﻿using Domain.Artists;
+using Domain.Artists.Exceptions;
+using Domain.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 

@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
-using Domain.Entities;
 
-namespace Domain.Abstractions;
+namespace Domain.Artists;
 
 public interface IArtistRepository
 {

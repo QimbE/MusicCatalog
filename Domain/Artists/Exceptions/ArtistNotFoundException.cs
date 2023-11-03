@@ -1,6 +1,6 @@
-﻿using Domain.Exceptions.Base;
+﻿using Domain.Exceptions;
 
-namespace Domain.Exceptions;
+namespace Domain.Artists.Exceptions;
 
 public sealed class ArtistNotFoundException : NotFoundException
 {

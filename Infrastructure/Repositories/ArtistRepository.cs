@@ -1,6 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Domain.Abstractions;
-using Domain.Entities;
+using Domain.Artists;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;

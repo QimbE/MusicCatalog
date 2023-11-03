@@ -1,4 +1,4 @@
-﻿namespace Domain.Exceptions.Base;
+﻿namespace Domain.Exceptions;
 
 [Serializable]
 public class NotFoundException: Exception

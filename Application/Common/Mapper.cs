@@ -1,4 +1,4 @@
-﻿using Domain.Exceptions.Base;
+﻿using Domain.Exceptions;
 using FluentValidation.Results;
 using Riok.Mapperly.Abstractions;
 

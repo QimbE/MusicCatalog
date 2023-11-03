@@ -1,5 +1,5 @@
 ﻿using Application.Data;
-using Domain.Abstractions;
+using Domain.Artists;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

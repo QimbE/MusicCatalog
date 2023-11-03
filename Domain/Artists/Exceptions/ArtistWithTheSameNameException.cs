@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Domain.Exceptions;
+namespace Domain.Artists.Exceptions;
 
 public class ArtistWithTheSameNameException : DuplicateNameException
 {

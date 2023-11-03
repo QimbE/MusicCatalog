@@ -1,7 +1,6 @@
-﻿using System.Reflection;
-using Domain.Primitives;
+﻿using Domain.Primitives;
 
-namespace Domain.Entities;
+namespace Domain.Artists;
 
 public sealed class Artist : Entity
 {

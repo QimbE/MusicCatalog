@@ -1,7 +1,7 @@
 ﻿using Application.Common;
 using Application.Data;
-using Domain.Abstractions;
-using Domain.Entities;
+using Domain.Artists;
+using Domain.Artists.Exceptions;
 using Domain.Exceptions;
 using MediatR;
 

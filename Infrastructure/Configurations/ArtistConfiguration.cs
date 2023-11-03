@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Artists;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
