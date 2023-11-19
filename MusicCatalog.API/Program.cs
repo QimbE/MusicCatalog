@@ -17,7 +17,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services
-            .AddApplication()
+            .AddApplication(builder.Configuration)
             .AddInfrastructure(builder.Configuration)
             .AddPresentation();
 
@@ -35,6 +35,10 @@ public class Program
         app.UseExceptionHandler("/error");
         
         app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+        
+        app.UseAuthorization();
         
         app.UseSerilogRequestLogging();
         
