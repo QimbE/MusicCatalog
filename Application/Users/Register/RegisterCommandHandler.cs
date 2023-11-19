@@ -2,6 +2,7 @@
 using Application.Common;
 using Application.Data;
 using Domain.Users;
+using Domain.Users.Exceptions;
 using MediatR;
 
 namespace Application.Users.Register;
@@ -25,7 +26,7 @@ public class RegisterCommandHandler: IRequestHandler<RegisterCommand, Result<str
     {
         if (await _userRepository.Any(u=> u.Email == request.Email))
         {
-            return new DuplicateNameException("User with such Email already registered.");
+            return new UserWithTheSameEmailException();
         }
 
         var hashedPassword = _hashProvider.Hash(request.Password);
