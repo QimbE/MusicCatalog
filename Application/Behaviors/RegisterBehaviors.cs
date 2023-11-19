@@ -3,6 +3,8 @@ using Application.Artists.Delete;
 using Application.Artists.Get;
 using Application.Artists.Update;
 using Application.Common;
+using Application.Users.Login;
+using Application.Users.Register;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,7 +30,9 @@ internal static class RegisterBehaviors
             .AddLoggingBehavior<CreateArtistCommand, Guid>()
             .AddLoggingBehavior<DeleteArtistCommand, bool>()
             .AddLoggingBehavior<GetArtistQuery, ArtistResponse>()
-            .AddLoggingBehavior<UpdateArtistCommand, bool>();
+            .AddLoggingBehavior<UpdateArtistCommand, bool>()
+            .AddLoggingBehavior<RegisterCommand, string>()
+            .AddLoggingBehavior<LoginCommand, string>();
     }
 
     /// <summary>
@@ -40,7 +44,8 @@ internal static class RegisterBehaviors
     {
         return config
             .AddValidationBehavior<CreateArtistCommand, Guid>()
-            .AddValidationBehavior<UpdateArtistCommand, bool>();
+            .AddValidationBehavior<UpdateArtistCommand, bool>()
+            .AddValidationBehavior<RegisterCommand, string>();
     }
 
     /// <summary>
