@@ -4,6 +4,7 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <UserSecretsId>1e9f1f62-7b4b-4885-a9e0-63dc824fc512</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -11,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.14" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13">
         <PrivateAssets>all</PrivateAssets>
