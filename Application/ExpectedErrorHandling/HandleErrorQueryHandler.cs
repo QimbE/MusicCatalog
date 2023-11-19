@@ -1,6 +1,9 @@
-﻿using Domain.Artists;
+﻿using System.Data;
+using System.Security.Authentication;
+using Domain.Artists;
 using Domain.Artists.Exceptions;
 using Domain.Exceptions;
+using Domain.Users.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
@@ -16,7 +19,10 @@ public class HandleErrorQueryHandler: IRequestHandler<HandleErrorQuery, IResult>
         {
             NotFoundException e => (StatusCodes.Status404NotFound, e.Message, null),
             ArtistWithTheSameNameException e => (StatusCodes.Status409Conflict, e.Message, null),
+            UserWithTheSameEmailException e => (StatusCodes.Status409Conflict, e.Message, null),
             ValidationFailureException e => ValidationFailureToResponse(e),
+            InvalidCredentialException e => (StatusCodes.Status400BadRequest, e.Message, null),
+            DuplicateNameException e => (StatusCodes.Status409Conflict, e.Message, null),
             _ => (StatusCodes.Status500InternalServerError, "An unexpected error occured.", null)
         };
         
