@@ -1,5 +1,6 @@
 ﻿using Application.Data;
 using Domain.Artists;
+using Domain.Users;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,8 @@ public static class DependencyInjection
             sp.GetRequiredService<ApplicationDbContext>());
 
         services.AddScoped<IArtistRepository, ArtistRepository>();
+
+        services.AddScoped<IUserRepository, UserRepository>();
         
         return services;
     }
