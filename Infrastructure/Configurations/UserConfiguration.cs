@@ -24,6 +24,11 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
         builder.Property(u => u.Username)
             .HasMaxLength(100)
             .IsRequired();
+
+        builder
+            .Property(u => u.Password)
+            .IsRequired()
+            .HasMaxLength(70);
         
         // wrong logic, check "to do" in UserRole enum
         builder.Property(u => u.Role)
