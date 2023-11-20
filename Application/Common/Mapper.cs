@@ -7,7 +7,7 @@ using Riok.Mapperly.Abstractions;
 namespace Application.Common;
 
 [Mapper]
-public partial class Mapper
+public partial class Mapper : IMapper
 {
     public partial IEnumerable<PropertyError> MapToErrors(IEnumerable<ValidationFailure> failures);
 

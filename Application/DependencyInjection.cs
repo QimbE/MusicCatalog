@@ -15,7 +15,7 @@ public static class DependencyInjection
     {
         var assembly = typeof(DependencyInjection).Assembly;
         
-        services.AddSingleton<Mapper, Mapper>();
+        services.AddSingleton<IMapper, Mapper>();
         
         services.AddMediatR(configuration =>
             {

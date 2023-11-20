@@ -12,9 +12,9 @@ public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCom
     private readonly IArtistRepository _artistRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICacheService _cache;
-    private readonly Mapper _mapper;
+    private readonly IMapper _mapper;
 
-    public CreateArtistCommandHandler(IArtistRepository artistRepository, IUnitOfWork unitOfWork, ICacheService cache, Mapper mapper)
+    public CreateArtistCommandHandler(IArtistRepository artistRepository, IUnitOfWork unitOfWork, ICacheService cache, IMapper mapper)
     {
         _artistRepository = artistRepository;
         _unitOfWork = unitOfWork;
