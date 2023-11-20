@@ -10,16 +10,35 @@ public class GetAllArtistQueryHandler: IRequestHandler<GetAllArtistsQuery, Resul
 {
     private readonly IApplicationDbContext _context;
 
-    public GetAllArtistQueryHandler(IApplicationDbContext context)
+    private readonly ICacheService _cache;
+
+    private const string ListOfUsersCacheKey = "ListOfUsersResponse:1";
+
+    public GetAllArtistQueryHandler(IApplicationDbContext context, ICacheService cache)
     {
         _context = context;
+        _cache = cache;
     }
 
     // todo: implement paging 
     public async Task<Result<IEnumerable<ArtistResponse>>> Handle(GetAllArtistsQuery request, CancellationToken cancellationToken)
     {
-        var artists = await GetAllArtist();
+        // check cache data
+        var artists = await _cache.GetDataAsync<IEnumerable<ArtistResponse>>(ListOfUsersCacheKey, cancellationToken);
 
+        // if cache is not empty
+        if (artists is not null && artists.Any())
+        {
+            return Result.From(artists);
+        }
+        
+        artists = await GetAllArtist();
+        
+        // caching
+        await _cache.SetDataAsync(ListOfUsersCacheKey, artists,
+            DateTimeOffset.UtcNow.AddMinutes(1), cancellationToken);
+        
+        // if there is no artists in db
         if (!artists.Any())
         {
             // todo: change to some new exception
