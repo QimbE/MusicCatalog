@@ -1,6 +1,7 @@
 ﻿using Application.Artists.Create;
 using Application.Artists.Delete;
 using Application.Artists.Get;
+using Application.Artists.GetAll;
 using Application.Artists.Update;
 using Application.Common;
 using Application.Users.Login;
@@ -32,7 +33,8 @@ internal static class RegisterBehaviors
             .AddLoggingBehavior<GetArtistQuery, ArtistResponse>()
             .AddLoggingBehavior<UpdateArtistCommand, bool>()
             .AddLoggingBehavior<RegisterCommand, string>()
-            .AddLoggingBehavior<LoginCommand, string>();
+            .AddLoggingBehavior<LoginCommand, string>()
+            .AddLoggingBehavior<GetAllArtistsQuery, IEnumerable<ArtistResponse>>();
     }
 
     /// <summary>
