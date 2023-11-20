@@ -8,10 +8,10 @@ namespace Application.Behaviors;
 public class ValidationPipeLineBehavior<TRequest, TResult>: IPipelineBehavior<TRequest, Result<TResult>> 
     where TRequest: IRequest<Result<TResult>>
 {
-    private readonly Mapper _mapper;
+    private readonly IMapper _mapper;
     private readonly IValidator<TRequest> _validator;
 
-    public ValidationPipeLineBehavior(IValidator<TRequest> validator, Mapper mapper)
+    public ValidationPipeLineBehavior(IValidator<TRequest> validator, IMapper mapper)
     {
         _validator = validator;
         _mapper = mapper;
