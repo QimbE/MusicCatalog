@@ -1,4 +1,6 @@
-﻿using Domain.Exceptions;
+﻿using Application.Artists.Get;
+using Domain.Artists;
+using Domain.Exceptions;
 using FluentValidation.Results;
 using Riok.Mapperly.Abstractions;
 
@@ -8,4 +10,6 @@ namespace Application.Common;
 public partial class Mapper
 {
     public partial IEnumerable<PropertyError> MapToErrors(IEnumerable<ValidationFailure> failures);
+
+    public partial ArtistResponse MapToResponse(Artist artist);
 }

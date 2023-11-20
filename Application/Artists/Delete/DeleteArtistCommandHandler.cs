@@ -11,11 +11,13 @@ public sealed class DeleteArtistCommandHandler : IRequestHandler<DeleteArtistCom
 {
     private readonly IArtistRepository _artistRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ICacheService _cache;
 
-    public DeleteArtistCommandHandler(IArtistRepository artistRepository, IUnitOfWork unitOfWork)
+    public DeleteArtistCommandHandler(IArtistRepository artistRepository, IUnitOfWork unitOfWork, ICacheService cache)
     {
         _artistRepository = artistRepository;
         _unitOfWork = unitOfWork;
+        _cache = cache;
     }
 
     public async Task<Result<bool>> Handle(DeleteArtistCommand request, CancellationToken cancellationToken)
@@ -30,6 +32,8 @@ public sealed class DeleteArtistCommandHandler : IRequestHandler<DeleteArtistCom
         _artistRepository.Remove(artist);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await _cache.RemoveDataAsync(CachingKeys.ArtistResponsePrefix + artist.Id, cancellationToken);
 
         return true;
     }

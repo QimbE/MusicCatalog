@@ -12,8 +12,6 @@ public class GetAllArtistQueryHandler: IRequestHandler<GetAllArtistsQuery, Resul
 
     private readonly ICacheService _cache;
 
-    private const string ListOfUsersCacheKey = "ListOfUsersResponse:1";
-
     public GetAllArtistQueryHandler(IApplicationDbContext context, ICacheService cache)
     {
         _context = context;
@@ -24,7 +22,7 @@ public class GetAllArtistQueryHandler: IRequestHandler<GetAllArtistsQuery, Resul
     public async Task<Result<IEnumerable<ArtistResponse>>> Handle(GetAllArtistsQuery request, CancellationToken cancellationToken)
     {
         // check cache data
-        var artists = await _cache.GetDataAsync<IEnumerable<ArtistResponse>>(ListOfUsersCacheKey, cancellationToken);
+        var artists = await _cache.GetDataAsync<IEnumerable<ArtistResponse>>(CachingKeys.ListOfUsersCacheKey, cancellationToken);
 
         // if cache is not empty
         if (artists is not null && artists.Any())
@@ -34,16 +32,16 @@ public class GetAllArtistQueryHandler: IRequestHandler<GetAllArtistsQuery, Resul
         
         artists = await GetAllArtist();
         
-        // caching
-        await _cache.SetDataAsync(ListOfUsersCacheKey, artists,
-            DateTimeOffset.UtcNow.AddMinutes(1), cancellationToken);
-        
         // if there is no artists in db
         if (!artists.Any())
         {
             // todo: change to some new exception
             return new ArtistNotFoundException(nameof(artists));
         }
+        
+        // caching
+        await _cache.SetDataAsync(CachingKeys.ListOfUsersCacheKey, artists,
+            DateTimeOffset.UtcNow.AddMinutes(1), cancellationToken);
 
         return Result.From(artists);
     }

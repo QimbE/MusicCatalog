@@ -11,16 +11,25 @@ namespace Application.Artists.Get;
 public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Result<ArtistResponse>>
 {
     private readonly IApplicationDbContext _context;
+    private readonly ICacheService _cache;
 
-    public GetArtistQueryHandler(IApplicationDbContext context)
+    public GetArtistQueryHandler(IApplicationDbContext context, ICacheService cache)
     {
         _context = context;
+        _cache = cache;
     }
 
 
     public async Task<Result<ArtistResponse>> Handle(GetArtistQuery request, CancellationToken cancellationToken)
     {
-        var artist = await _context.Artists
+        var artist = await _cache.GetDataAsync<ArtistResponse>(CachingKeys.ArtistResponsePrefix + request.Id, cancellationToken);
+
+        if (artist is not null)
+        {
+            return artist;
+        }
+        
+        artist = await _context.Artists
             .Where(a => a.Id == request.Id)
             .Select(a => new ArtistResponse(a.Id, a.Name, a.Description))
             .FirstOrDefaultAsync(cancellationToken);
@@ -29,6 +38,13 @@ public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Resul
         {
             return new ArtistNotFoundException(nameof(request.Id));
         }
+
+        await _cache.SetDataAsync(
+            CachingKeys.ArtistResponsePrefix + artist.Id,
+            artist,
+            DateTimeOffset.UtcNow.AddMinutes(1),
+            cancellationToken
+            );
 
         return artist;
     }
