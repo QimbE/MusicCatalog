@@ -1,6 +1,7 @@
 ﻿using Application.Artists.Create;
 using Application.Artists.Delete;
 using Application.Artists.Get;
+using Application.Artists.GetAll;
 using Application.Artists.Update;
 using Application.ExpectedErrorHandling;
 using Carter;
@@ -36,6 +37,16 @@ public class Artist : ICarterModule
                 res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
             );
+        });
+
+        group.MapGet("", async (ISender sender) =>
+        {
+            var result = await sender.Send(new GetAllArtistsQuery());
+
+            return await result.MatchAsync(
+                res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
+                errors => sender.Send(new HandleErrorQuery(errors))
+                );
         });
 
         group.MapPut("{id:guid}", async ([FromRoute] Guid id, [FromBody] UpdateArtistRequest request, ISender sender) =>
