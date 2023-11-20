@@ -10,7 +10,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext, IUnitOfWor
     public DbSet<Artist> Artists { get; set; }
     public DbSet<User> Users { get; set; }
 
-    public ApplicationDbContext(DbContextOptions options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         :base(options)
     {
         
