@@ -23,7 +23,7 @@ public sealed class LoginCommandHandler:IRequestHandler<LoginCommand, Result<str
     {
         var userFromDb  = await _repository.GetByEmailAsync(request.Email);
 
-        if (userFromDb is null ||
+        if (userFromDb is null || !
             _hashProvider.Verify(userFromDb.Password, request.Password))
         {
             return new InvalidCredentialException("Invalid credentials");
