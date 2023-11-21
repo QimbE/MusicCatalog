@@ -12,27 +12,28 @@ public class User: Entity
     [JsonIgnore]
     public string Password { get; private set; }
 
-    public UserRole Role { get; private set; }
+    public Role Role { get; private set; }
+    public int RoleId { get; private set; }
 
-    private User(string username, string email, string password, UserRole role = UserRole.DefaultUser)
+    private User(string username, string email, string password, int roleId)
         :base(Guid.NewGuid())
     {
         Username = username;
         Email = email;
         Password = password;
-        Role = role;
+        RoleId = roleId;
     }
 
-    public void Update(string username, string email, string password, UserRole role)
+    public void Update(string username, string email, string password, int roleId)
     {
         Username = username;
         Email = email;
         Password = password;
-        Role = role;
+        RoleId = roleId;
     }
 
-    public static User Create(string username, string email, string password, UserRole role = UserRole.DefaultUser)
+    public static User Create(string username, string email, string password, int roleId)
     {
-        return new User(username, email, password, role);
+        return new User(username, email, password, roleId);
     }
 }

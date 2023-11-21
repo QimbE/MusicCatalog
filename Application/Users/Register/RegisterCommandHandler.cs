@@ -34,7 +34,8 @@ public class RegisterCommandHandler: IRequestHandler<RegisterCommand, Result<str
         var user = User.Create(
             request.Username,
             request.Email,
-            hashedPassword
+            hashedPassword,
+            Role.Default
             );
         
         _userRepository.Add(user);
