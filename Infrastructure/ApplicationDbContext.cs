@@ -9,6 +9,8 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext, IUnitOfWor
 {
     public DbSet<Artist> Artists { get; set; }
     public DbSet<User> Users { get; set; }
+    
+    public DbSet<Role> Roles { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         :base(options)

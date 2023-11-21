@@ -29,11 +29,6 @@ public class UserConfiguration: IEntityTypeConfiguration<User>
             .Property(u => u.Password)
             .IsRequired()
             .HasMaxLength(70);
-        
-        // wrong logic, check "to do" in UserRole enum
-        builder.Property(u => u.Role)
-            .IsRequired()
-            .HasConversion<int>();
 
         #endregion
     }
