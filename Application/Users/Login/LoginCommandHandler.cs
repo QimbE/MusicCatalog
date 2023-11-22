@@ -21,7 +21,7 @@ public sealed class LoginCommandHandler:IRequestHandler<LoginCommand, Result<str
 
     public async Task<Result<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var userFromDb  = await _repository.GetByEmailAsync(request.Email);
+        var userFromDb  = await _repository.GetByEmailAsync(request.Email, "Role");
 
         if (userFromDb is null || !
             _hashProvider.Verify(userFromDb.Password, request.Password))

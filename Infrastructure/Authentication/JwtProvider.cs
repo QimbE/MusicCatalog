@@ -19,10 +19,10 @@ public sealed class JwtProvider: IJwtProvider
     
     public string Generate(User user)
     {
-        // todo: add role claim from ClaimTypes
         var claims = new Claim[]
         {
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new(ClaimTypes.Role, user.Role.Name),
             new(JwtRegisteredClaimNames.Email, user.Email)
         };
         
