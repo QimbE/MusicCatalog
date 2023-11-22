@@ -13,9 +13,21 @@ public class UserRepository: IUserRepository
         _context = context;
     }
 
-    public Task<User?> GetByEmailAsync(string email)
+    public Task<User?> GetByEmailAsync(string email, string? includeProperties = null)
     {
-        return _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        IQueryable<User> set = _context.Users;
+
+        if (!string.IsNullOrEmpty(includeProperties))
+        {
+            foreach (var includeProp in
+                     includeProperties.Split(
+                         new char[]{','}, StringSplitOptions.RemoveEmptyEntries))
+            {
+                set = set.Include(includeProp);
+            }
+        }
+        
+        return set.FirstOrDefaultAsync(u => u.Email == email);
     }
 
     public void Add(User user)
