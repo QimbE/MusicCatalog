@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Application.Authorization;
 using Application.Behaviors;
 using Application.Common;
 using FluentValidation;
@@ -45,6 +46,8 @@ public static class DependencyInjection
         });
 
         services.AddAuthorization();
+
+        services.AddRoleAuthorizationPolicies();
 
         return services;
     }
