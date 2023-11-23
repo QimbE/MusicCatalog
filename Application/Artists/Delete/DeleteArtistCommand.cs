@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Application.Artists.Delete;
 
-public record DeleteArtistCommand(Guid Id) : IRequest<Result<bool>>;
+public record DeleteArtistCommand(Guid Id) : IRequest<ResultType<bool>>;

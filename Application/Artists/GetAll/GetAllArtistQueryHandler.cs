@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Application.Artists.GetAll;
 
-public class GetAllArtistQueryHandler: IRequestHandler<GetAllArtistsQuery, Result<IEnumerable<ArtistResponse>>>
+public class GetAllArtistQueryHandler: IRequestHandler<GetAllArtistsQuery, ResultType<IEnumerable<ArtistResponse>>>
 {
     private readonly IApplicationDbContext _context;
 
@@ -19,7 +19,7 @@ public class GetAllArtistQueryHandler: IRequestHandler<GetAllArtistsQuery, Resul
     }
 
     // todo: implement paging 
-    public async Task<Result<IEnumerable<ArtistResponse>>> Handle(GetAllArtistsQuery request, CancellationToken cancellationToken)
+    public async Task<ResultType<IEnumerable<ArtistResponse>>> Handle(GetAllArtistsQuery request, CancellationToken cancellationToken)
     {
         // check cache data
         var artists = await _cache.GetDataAsync<IEnumerable<ArtistResponse>>(CachingKeys.ListOfUsersCacheKey, cancellationToken);

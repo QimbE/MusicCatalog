@@ -4,7 +4,7 @@
 /// Slightly modified ErrorOr library by Amichai Mantinband
 /// </summary>
 /// <typeparam name="TValue">Some excepcted value</typeparam>
-public record struct Result<TValue>
+public record struct ResultType<TValue>
 {
     private readonly TValue? _value = default;
     private readonly List<Exception>? _errors = null;
@@ -25,9 +25,9 @@ public record struct Result<TValue>
     public List<Exception> ErrorsOrEmptyList => IsError ? _errors! : new();
 
     /// <summary>
-    /// Creates an <see cref="Result{TValue}"/> from a list of errors.
+    /// Creates an <see cref="ResultType{TValue}"/> from a list of errors.
     /// </summary>
-    public static Result<TValue> From(List<Exception> errors)
+    public static ResultType<TValue> From(List<Exception> errors)
     {
         return errors;
     }
@@ -53,58 +53,58 @@ public record struct Result<TValue>
         }
     }
 
-    private Result(Exception error)
+    private ResultType(Exception error)
     {
         _errors = new List<Exception> { error };
         IsError = true;
     }
 
-    private Result(List<Exception> errors)
+    private ResultType(List<Exception> errors)
     {
         _errors = errors;
         IsError = true;
     }
 
-    private Result(TValue value)
+    private ResultType(TValue value)
     {
         _value = value;
         IsError = false;
     }
 
     /// <summary>
-    /// Creates an <see cref="Result{TValue}"/> from a value.
+    /// Creates an <see cref="ResultType{TValue}"/> from a value.
     /// </summary>
-    public static implicit operator Result<TValue>(TValue value)
+    public static implicit operator ResultType<TValue>(TValue value)
     {
-        return new Result<TValue>(value);
+        return new ResultType<TValue>(value);
     }
 
     /// <summary>
-    /// Creates an <see cref="Result{TValue}"/> from an error.
+    /// Creates an <see cref="ResultType{TValue}"/> from an error.
     /// </summary>
-    public static implicit operator Result<TValue>(Exception error)
+    public static implicit operator ResultType<TValue>(Exception error)
     {
-        return new Result<TValue>(error);
+        return new ResultType<TValue>(error);
     }
 
     /// <summary>
-    /// Creates an <see cref="Result{TValue}"/> from a list of errors.
+    /// Creates an <see cref="ResultType{TValue}"/> from a list of errors.
     /// </summary>
-    public static implicit operator Result<TValue>(List<Exception> errors)
+    public static implicit operator ResultType<TValue>(List<Exception> errors)
     {
-        return new Result<TValue>(errors);
+        return new ResultType<TValue>(errors);
     }
 
     /// <summary>
-    /// Creates an <see cref="Result{TValue}"/> from a list of errors.
+    /// Creates an <see cref="ResultType{TValue}"/> from a list of errors.
     /// </summary>
-    public static implicit operator Result<TValue>(Exception[] errors)
+    public static implicit operator ResultType<TValue>(Exception[] errors)
     {
-        return new Result<TValue>(errors.ToList());
+        return new ResultType<TValue>(errors.ToList());
     }
 
     /// <summary>
-    /// Executes the appropriate action based on the state of the <see cref="Result{TValue}"/>.
+    /// Executes the appropriate action based on the state of the <see cref="ResultType{TValue}"/>.
     /// If the state is an error, the provided action <paramref name="onError"/> is executed.
     /// If the state is a value, the provided action <paramref name="onValue"/> is executed.
     /// </summary>
@@ -122,7 +122,7 @@ public record struct Result<TValue>
     }
 
     /// <summary>
-    /// Asynchronously executes the appropriate action based on the state of the <see cref="Result{TValue}"/>.
+    /// Asynchronously executes the appropriate action based on the state of the <see cref="ResultType{TValue}"/>.
     /// If the state is an error, the provided action <paramref name="onError"/> is executed asynchronously.
     /// If the state is a value, the provided action <paramref name="onValue"/> is executed asynchronously.
     /// </summary>
@@ -141,7 +141,7 @@ public record struct Result<TValue>
     }
 
     /// <summary>
-    /// Executes the appropriate action based on the state of the <see cref="Result{TValue}"/>.
+    /// Executes the appropriate action based on the state of the <see cref="ResultType{TValue}"/>.
     /// If the state is an error, the provided action <paramref name="onFirstError"/> is executed using the first error as input.
     /// If the state is a value, the provided action <paramref name="onValue"/> is executed.
     /// </summary>
@@ -159,7 +159,7 @@ public record struct Result<TValue>
     }
 
     /// <summary>
-    /// Asynchronously executes the appropriate action based on the state of the <see cref="Result{TValue}"/>.
+    /// Asynchronously executes the appropriate action based on the state of the <see cref="ResultType{TValue}"/>.
     /// If the state is an error, the provided action <paramref name="onFirstError"/> is executed asynchronously using the first error as input.
     /// If the state is a value, the provided action <paramref name="onValue"/> is executed asynchronously.
     /// </summary>
@@ -178,7 +178,7 @@ public record struct Result<TValue>
     }
 
     /// <summary>
-    /// Executes the appropriate function based on the state of the <see cref="Result{TValue}"/>.
+    /// Executes the appropriate function based on the state of the <see cref="ResultType{TValue}"/>.
     /// If the state is a value, the provided function <paramref name="onValue"/> is executed and its result is returned.
     /// If the state is an error, the provided function <paramref name="onError"/> is executed and its result is returned.
     /// </summary>
@@ -197,7 +197,7 @@ public record struct Result<TValue>
     }
 
     /// <summary>
-    /// Asynchronously executes the appropriate function based on the state of the <see cref="Result{TValue}"/>.
+    /// Asynchronously executes the appropriate function based on the state of the <see cref="ResultType{TValue}"/>.
     /// If the state is a value, the provided function <paramref name="onValue"/> is executed asynchronously and its result is returned.
     /// If the state is an error, the provided function <paramref name="onError"/> is executed asynchronously and its result is returned.
     /// </summary>
@@ -216,7 +216,7 @@ public record struct Result<TValue>
     }
 
     /// <summary>
-    /// Executes the appropriate function based on the state of the <see cref="Result{TValue}"/>.
+    /// Executes the appropriate function based on the state of the <see cref="ResultType{TValue}"/>.
     /// If the state is a value, the provided function <paramref name="onValue"/> is executed and its result is returned.
     /// If the state is an error, the provided function <paramref name="onFirstError"/> is executed using the first error, and its result is returned.
     /// </summary>
@@ -235,7 +235,7 @@ public record struct Result<TValue>
     }
 
     /// <summary>
-    /// Asynchronously executes the appropriate function based on the state of the <see cref="Result{TValue}"/>.
+    /// Asynchronously executes the appropriate function based on the state of the <see cref="ResultType{TValue}"/>.
     /// If the state is a value, the provided function <paramref name="onValue"/> is executed asynchronously and its result is returned.
     /// If the state is an error, the provided function <paramref name="onFirstError"/> is executed asynchronously using the first error, and its result is returned.
     /// </summary>
@@ -265,7 +265,7 @@ public static class Result
     /// <typeparam name="TValue">The type of the value.</typeparam>
     /// <param name="value">The value from which to create an Result instance.</param>
     /// <returns>An <see ref="Result{TValue}"/> instance containing the specified value.</returns>
-    public static Result<TValue> From<TValue>(TValue value)
+    public static ResultType<TValue> From<TValue>(TValue value)
     {
         return value;
     }

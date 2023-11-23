@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Artists.Create;
 
-public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCommand, Result<Guid>>
+public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCommand, ResultType<Guid>>
 {
     private readonly IArtistRepository _artistRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -22,7 +22,7 @@ public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCom
         _mapper = mapper;
     }
 
-    public async Task<Result<Guid>> Handle(CreateArtistCommand request, CancellationToken cancellationToken)
+    public async Task<ResultType<Guid>> Handle(CreateArtistCommand request, CancellationToken cancellationToken)
     {
         if (await _artistRepository.Any(a=> a.Name == request.Name))
         {

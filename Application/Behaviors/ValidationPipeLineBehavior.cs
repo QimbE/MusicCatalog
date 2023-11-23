@@ -5,8 +5,8 @@ using MediatR;
 
 namespace Application.Behaviors;
 
-public class ValidationPipeLineBehavior<TRequest, TResult>: IPipelineBehavior<TRequest, Result<TResult>> 
-    where TRequest: IRequest<Result<TResult>>
+public class ValidationPipeLineBehavior<TRequest, TResult>: IPipelineBehavior<TRequest, ResultType<TResult>> 
+    where TRequest: IRequest<ResultType<TResult>>
 {
     private readonly IMapper _mapper;
     private readonly IValidator<TRequest> _validator;
@@ -17,7 +17,7 @@ public class ValidationPipeLineBehavior<TRequest, TResult>: IPipelineBehavior<TR
         _mapper = mapper;
     }
 
-    public async Task<Result<TResult>> Handle(TRequest request, RequestHandlerDelegate<Result<TResult>> next, CancellationToken cancellationToken)
+    public async Task<ResultType<TResult>> Handle(TRequest request, RequestHandlerDelegate<ResultType<TResult>> next, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request);
         

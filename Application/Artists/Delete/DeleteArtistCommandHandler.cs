@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Artists.Delete;
 
-public sealed class DeleteArtistCommandHandler : IRequestHandler<DeleteArtistCommand, Result<bool>>
+public sealed class DeleteArtistCommandHandler : IRequestHandler<DeleteArtistCommand, ResultType<bool>>
 {
     private readonly IArtistRepository _artistRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -20,7 +20,7 @@ public sealed class DeleteArtistCommandHandler : IRequestHandler<DeleteArtistCom
         _cache = cache;
     }
 
-    public async Task<Result<bool>> Handle(DeleteArtistCommand request, CancellationToken cancellationToken)
+    public async Task<ResultType<bool>> Handle(DeleteArtistCommand request, CancellationToken cancellationToken)
     {
         var artist = await _artistRepository.GetArtistByIdAsync(request.Id);
 

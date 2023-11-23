@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Users.Login;
 
-public sealed class LoginCommandHandler:IRequestHandler<LoginCommand, Result<string>>
+public sealed class LoginCommandHandler:IRequestHandler<LoginCommand, ResultType<string>>
 {
 
     private readonly IUserRepository _repository;
@@ -19,7 +19,7 @@ public sealed class LoginCommandHandler:IRequestHandler<LoginCommand, Result<str
         _hashProvider = hashProvider;
     }
 
-    public async Task<Result<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<ResultType<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         var userFromDb  = await _repository.GetByEmailAsync(request.Email, "Role");
 

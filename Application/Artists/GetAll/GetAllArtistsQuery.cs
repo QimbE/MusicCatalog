@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Application.Artists.GetAll;
 
-public record GetAllArtistsQuery() : IRequest<Result<IEnumerable<ArtistResponse>>>;
+public record GetAllArtistsQuery() : IRequest<ResultType<IEnumerable<ArtistResponse>>>;

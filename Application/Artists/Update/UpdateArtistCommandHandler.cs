@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Artists.Update;
 
-public sealed class UpdateArtistCommandHandler: IRequestHandler<UpdateArtistCommand, Result<bool>>
+public sealed class UpdateArtistCommandHandler: IRequestHandler<UpdateArtistCommand, ResultType<bool>>
 {
     private readonly IArtistRepository _artistRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -22,7 +22,7 @@ public sealed class UpdateArtistCommandHandler: IRequestHandler<UpdateArtistComm
         _mapper = mapper;
     }
 
-    public async Task<Result<bool>> Handle(UpdateArtistCommand request, CancellationToken cancellationToken)
+    public async Task<ResultType<bool>> Handle(UpdateArtistCommand request, CancellationToken cancellationToken)
     {
         var artist = await _artistRepository.GetArtistByIdAsync(request.Id);
 

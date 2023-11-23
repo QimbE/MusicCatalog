@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Users.Register;
 
-public class RegisterCommandHandler: IRequestHandler<RegisterCommand, Result<string>>
+public class RegisterCommandHandler: IRequestHandler<RegisterCommand, ResultType<string>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IJwtProvider _jwtProvider;
@@ -22,7 +22,7 @@ public class RegisterCommandHandler: IRequestHandler<RegisterCommand, Result<str
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<string>> Handle(RegisterCommand request, CancellationToken cancellationToken)
+    public async Task<ResultType<string>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
         if (await _userRepository.Any(u=> u.Email == request.Email))
         {

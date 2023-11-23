@@ -59,10 +59,10 @@ internal static class RegisterBehaviors
     /// <returns></returns>
     private static MediatRServiceConfiguration AddValidationBehavior<TRequest, TResponse>(
         this MediatRServiceConfiguration config)
-        where TRequest : IRequest<Result<TResponse>>
+        where TRequest : IRequest<ResultType<TResponse>>
     {
         return config
-            .AddBehavior<IPipelineBehavior<TRequest, Result<TResponse>>,
+            .AddBehavior<IPipelineBehavior<TRequest, ResultType<TResponse>>,
                 ValidationPipeLineBehavior<TRequest, TResponse>>();
     }
 
@@ -75,10 +75,10 @@ internal static class RegisterBehaviors
     /// <returns></returns>
     private static MediatRServiceConfiguration AddLoggingBehavior<TRequest, TResponse>(
         this MediatRServiceConfiguration config)
-        where TRequest : IRequest<Result<TResponse>>
+        where TRequest : IRequest<ResultType<TResponse>>
     {
         return config
-            .AddBehavior<IPipelineBehavior<TRequest, Result<TResponse>>,
+            .AddBehavior<IPipelineBehavior<TRequest, ResultType<TResponse>>,
                 LoggingPipeLineBehavior<TRequest, TResponse>>();
     }
 }

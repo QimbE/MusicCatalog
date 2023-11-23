@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Artists.Get;
 
-public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Result<ArtistResponse>>
+public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, ResultType<ArtistResponse>>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICacheService _cache;
@@ -20,7 +20,7 @@ public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Resul
     }
 
 
-    public async Task<Result<ArtistResponse>> Handle(GetArtistQuery request, CancellationToken cancellationToken)
+    public async Task<ResultType<ArtistResponse>> Handle(GetArtistQuery request, CancellationToken cancellationToken)
     {
         var artist = await _cache.GetDataAsync<ArtistResponse>(CachingKeys.ArtistResponsePrefix + request.Id, cancellationToken);
 

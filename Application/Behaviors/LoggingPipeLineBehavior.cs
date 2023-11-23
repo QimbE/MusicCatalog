@@ -4,8 +4,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Behaviors;
 
-public class LoggingPipeLineBehavior<TRequest, TResult>: IPipelineBehavior<TRequest, Result<TResult>>
-    where TRequest: IRequest<Result<TResult>>
+public class LoggingPipeLineBehavior<TRequest, TResult>: IPipelineBehavior<TRequest, ResultType<TResult>>
+    where TRequest: IRequest<ResultType<TResult>>
 {
     private readonly ILogger<LoggingPipeLineBehavior<TRequest, TResult>> _logger;
 
@@ -14,9 +14,9 @@ public class LoggingPipeLineBehavior<TRequest, TResult>: IPipelineBehavior<TRequ
         _logger = logger;
     }
 
-    public async Task<Result<TResult>> Handle(
+    public async Task<ResultType<TResult>> Handle(
         TRequest request,
-        RequestHandlerDelegate<Result<TResult>> next,
+        RequestHandlerDelegate<ResultType<TResult>> next,
         CancellationToken cancellationToken)
     {
         _logger.LogInformation("Starting request {@RequestName}, {@DateTimeUtc}",
