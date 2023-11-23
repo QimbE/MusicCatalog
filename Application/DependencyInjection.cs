@@ -2,6 +2,7 @@
 using Application.Authorization;
 using Application.Common;
 using Application.DIExtensions;
+using Application.ExceptionHandling;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -52,6 +53,8 @@ public static class DependencyInjection
         services.AddGraphQLServer()
             .ConfigureHotChocolateTypes()
             .ConfigurePipeline();
+
+        services.AddTransient<GlobalExceptionHandlingMiddleware>();
         
         return services;
     }

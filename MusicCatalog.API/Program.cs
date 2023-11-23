@@ -1,4 +1,5 @@
 using Application;
+using Application.ExceptionHandling;
 using Carter;
 using Infrastructure;
 using Presentation;
@@ -41,6 +42,8 @@ public class Program
         app.UseAuthorization();
         
         app.UseSerilogRequestLogging();
+
+        app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
         
         app.MapCarter();
         
