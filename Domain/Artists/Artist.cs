@@ -26,6 +26,10 @@ public sealed class Artist : Entity
         Description = description;
     }
 
+    private Artist()
+    {
+        
+    }
     /// <summary>
     /// Updates an instance of Artist based on provided data.
     /// </summary>
