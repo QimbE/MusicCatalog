@@ -24,7 +24,7 @@ public class RegisterCommandHandler: IRequestHandler<RegisterCommand, ResultType
 
     public async Task<ResultType<string>> Handle(RegisterCommand request, CancellationToken cancellationToken)
     {
-        if (await _userRepository.Any(u=> u.Email == request.Email))
+        if (await _userRepository.Any(u=> u.Email == request.Email, cancellationToken))
         {
             return new UserWithTheSameEmailException();
         }

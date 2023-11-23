@@ -13,7 +13,7 @@ public class ArtistsQL
     [UseFiltering]
     [UseSorting]
     // [Authorize(Role.RoleNames.Default)]
-    public async Task<IQueryable<Artist>> GetArtists([Service(ServiceKind.Resolver)] IApplicationDbContext context)
+    public async Task<IQueryable<Artist>> GetArtists([Service(ServiceKind.Resolver)] IApplicationDbContext context, CancellationToken cancellationToken)
     {
         return context.Artists;
     }

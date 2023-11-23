@@ -17,9 +17,9 @@ public class User: ICarterModule
     {
         var group = app.MapGroup("users");
 
-        group.MapPost("login", async ([FromBody] LoginCommand request, ISender sender) =>
+        group.MapPost("login", async ([FromBody] LoginCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
-            var res = await sender.Send(request);
+            var res = await sender.Send(request, cancellationToken);
 
             return await res.MatchAsync<IResult>(
                 result => Task.FromResult(Results.Ok(result)),
@@ -27,9 +27,9 @@ public class User: ICarterModule
                 );
         });
 
-        group.MapPost("register", async ([FromBody] RegisterCommand request, ISender sender) =>
+        group.MapPost("register", async ([FromBody] RegisterCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
-            var res = await sender.Send(request);
+            var res = await sender.Send(request, cancellationToken);
 
             return await res.MatchAsync<IResult>(
                 result => Task.FromResult(Results.Ok(result)),

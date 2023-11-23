@@ -24,14 +24,14 @@ public sealed class UpdateArtistCommandHandler: IRequestHandler<UpdateArtistComm
 
     public async Task<ResultType<bool>> Handle(UpdateArtistCommand request, CancellationToken cancellationToken)
     {
-        var artist = await _artistRepository.GetArtistByIdAsync(request.Id);
+        var artist = await _artistRepository.GetArtistByIdAsync(request.Id, cancellationToken);
 
         if (artist is null)
         {
            return new ArtistNotFoundException(nameof(request.Id));
         }
 
-        if (await _artistRepository.Any(a=> a.Name == request.Name))
+        if (await _artistRepository.Any(a=> a.Name == request.Name, cancellationToken))
         {
             return new ArtistWithTheSameNameException(request.Name);
         }
