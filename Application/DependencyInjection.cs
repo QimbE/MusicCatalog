@@ -1,8 +1,7 @@
 ﻿using System.Text;
-using Application.Artists;
 using Application.Authorization;
-using Application.Behaviors;
 using Application.Common;
+using Application.DIExtensions;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
@@ -51,24 +50,8 @@ public static class DependencyInjection
         services.AddRoleAuthorizationPolicies();
 
         services.AddGraphQLServer()
-            .AddQueryType<ArtistsQL>()
-            .AddProjections()
-            .AddSorting()
-            .AddFiltering()
-            .AddAuthorization()
-            //request pipeline starts
-            .UseInstrumentation()
-            .UseExceptions()
-            .UseTimeout()
-            .UseDocumentCache()
-            .UseDocumentParser()
-            .UseDocumentValidation()
-            .UseRequest<CachingMiddleware>()
-            .UseOperationCache()
-            .UseOperationComplexityAnalyzer()
-            .UseOperationResolver()
-            .UseOperationVariableCoercion()
-            .UseOperationExecution();
+            .ConfigureHotChocolateTypes()
+            .ConfigurePipeline();
         
         return services;
     }
