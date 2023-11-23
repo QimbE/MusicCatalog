@@ -18,7 +18,6 @@ public class GetAllArtistQueryHandler: IRequestHandler<GetAllArtistsQuery, Resul
         _cache = cache;
     }
 
-    // todo: implement paging 
     public async Task<ResultType<IEnumerable<ArtistResponse>>> Handle(GetAllArtistsQuery request, CancellationToken cancellationToken)
     {
         // check cache data

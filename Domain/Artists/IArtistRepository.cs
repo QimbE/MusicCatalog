@@ -5,11 +5,11 @@ namespace Domain.Artists;
 //todo: cancelletion tokens
 public interface IArtistRepository
 {
-    Task<Artist?> GetArtistByIdAsync(Guid id);
+    Task<Artist?> GetArtistByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
-    Task<Artist?> GetArtistByNameAsync(string name);
+    Task<Artist?> GetArtistByNameAsync(string name, CancellationToken cancellationToken = default);
     
-    Task<bool> Any(Expression<Func<Artist, bool>> expression);
+    Task<bool> Any(Expression<Func<Artist, bool>> expression, CancellationToken cancellationToken = default);
     
     void Add(Artist artist);
     

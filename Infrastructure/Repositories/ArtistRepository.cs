@@ -13,21 +13,21 @@ internal sealed class ArtistRepository : IArtistRepository
         _context = context;
     }
 
-    public Task<Artist?> GetArtistByIdAsync(Guid id)
+    public Task<Artist?> GetArtistByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return _context.Artists
-            .SingleOrDefaultAsync(a => a.Id == id);
+            .SingleOrDefaultAsync(a => a.Id == id, cancellationToken);
     }
 
-    public Task<Artist?> GetArtistByNameAsync(string name)
+    public Task<Artist?> GetArtistByNameAsync(string name, CancellationToken cancellationToken = default)
     {
         return _context.Artists
-            .SingleOrDefaultAsync(a => a.Name == name);
+            .SingleOrDefaultAsync(a => a.Name == name, cancellationToken);
     }
 
-    public Task<bool> Any(Expression<Func<Artist, bool>> expression)
+    public Task<bool> Any(Expression<Func<Artist, bool>> expression, CancellationToken cancellationToken = default)
     {
-        return _context.Artists.AnyAsync(expression);
+        return _context.Artists.AnyAsync(expression, cancellationToken);
     }
 
     public void Add(Artist artist)

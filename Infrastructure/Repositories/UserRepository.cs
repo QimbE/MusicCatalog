@@ -13,7 +13,7 @@ public class UserRepository: IUserRepository
         _context = context;
     }
 
-    public Task<User?> GetByEmailAsync(string email, string? includeProperties = null)
+    public Task<User?> GetByEmailAsync(string email, string? includeProperties = null, CancellationToken cancellationToken = default)
     {
         IQueryable<User> set = _context.Users;
 
@@ -27,7 +27,7 @@ public class UserRepository: IUserRepository
             }
         }
         
-        return set.FirstOrDefaultAsync(u => u.Email == email);
+        return set.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
     }
 
     public void Add(User user)
@@ -35,8 +35,8 @@ public class UserRepository: IUserRepository
         _context.Users.Add(user);
     }
 
-    public Task<bool> Any(Expression<Func<User, bool>> expression)
+    public Task<bool> Any(Expression<Func<User, bool>> expression, CancellationToken cancellationToken = default)
     {
-        return _context.Users.AnyAsync(expression);
+        return _context.Users.AnyAsync(expression, cancellationToken);
     }
 }
