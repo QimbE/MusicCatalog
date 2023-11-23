@@ -1,13 +1,12 @@
 ﻿using System.Data;
 using System.Security.Authentication;
-using Domain.Artists;
 using Domain.Artists.Exceptions;
 using Domain.Exceptions;
 using Domain.Users.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
-namespace Application.ExpectedErrorHandling;
+namespace Application.ExceptionHandling.ExpectedErrors;
 
 public class HandleErrorQueryHandler: IRequestHandler<HandleErrorQuery, IResult>
 {

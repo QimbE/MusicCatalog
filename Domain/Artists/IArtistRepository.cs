@@ -2,7 +2,6 @@
 
 namespace Domain.Artists;
 
-//todo: cancelletion tokens
 public interface IArtistRepository
 {
     Task<Artist?> GetArtistByIdAsync(Guid id, CancellationToken cancellationToken = default);

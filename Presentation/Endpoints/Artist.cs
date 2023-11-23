@@ -3,7 +3,7 @@ using Application.Artists.Delete;
 using Application.Artists.Get;
 using Application.Artists.GetAll;
 using Application.Artists.Update;
-using Application.ExpectedErrorHandling;
+using Application.ExceptionHandling.ExpectedErrors;
 using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

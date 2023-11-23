@@ -1,4 +1,4 @@
-﻿using Application.ExpectedErrorHandling;
+﻿using Application.ExceptionHandling.ExpectedErrors;
 using Application.Users;
 using Application.Users.Login;
 using Application.Users.Register;
