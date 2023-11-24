@@ -32,8 +32,8 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
-        app.UseExceptionHandler("/error");
+        
+        app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
         
         app.UseHttpsRedirection();
 
@@ -42,8 +42,6 @@ public class Program
         app.UseAuthorization();
         
         app.UseSerilogRequestLogging();
-
-        app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
         
         app.MapCarter();
         
