@@ -22,7 +22,7 @@ public class User: ICarterModule
             var res = await sender.Send(request, cancellationToken);
 
             return await res.MatchAsync<IResult>(
-                result => Task.FromResult(Results.Ok(result)),
+                result => Task.FromResult(Results.Ok(new {Message = "Success", Data = result})),
                 errors => sender.Send(new HandleErrorQuery(errors))
                 );
         });
@@ -32,7 +32,7 @@ public class User: ICarterModule
             var res = await sender.Send(request, cancellationToken);
 
             return await res.MatchAsync<IResult>(
-                result => Task.FromResult(Results.Ok(result)),
+                result => Task.FromResult(Results.Ok(new {Message = "Success", Data = result})),
                 errors => sender.Send(new HandleErrorQuery(errors))
                 );
         });
