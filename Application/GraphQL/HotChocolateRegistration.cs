@@ -1,5 +1,6 @@
 ﻿using Application.Artists;
 using Application.Behaviors;
+using Application.GraphQL.TypeConfigurations;
 using HotChocolate.Execution.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ public static class HotChocolateRegistration
     {
         return builder
             .AddQueryType<ArtistsQL>()
+            .AddType<ReleaseTypeType>()
             .AddProjections()
             .AddSorting()
             .AddFiltering()
