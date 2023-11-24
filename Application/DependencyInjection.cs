@@ -27,6 +27,19 @@ public static class DependencyInjection
         
         services.AddValidatorsFromAssembly(assembly);
 
+        var secretKey = Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!);
+        
+        var tokenValidationParameter = new TokenValidationParameters
+        {
+            ValidIssuer = configuration["JwtSettings:Issuer"],
+            ValidAudience = configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true
+        };
+
         services.AddAuthentication(x =>
         {
             x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -34,16 +47,7 @@ public static class DependencyInjection
             x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(x =>
         {
-            x.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidIssuer = configuration["JwtSettings:Issuer"],
-                ValidAudience = configuration["JwtSettings:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]!)),
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true
-            };
+            x.TokenValidationParameters = tokenValidationParameter;
         });
 
         services.AddAuthorization();

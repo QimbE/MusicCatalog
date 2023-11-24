@@ -37,7 +37,11 @@ public sealed class JwtProvider: IJwtProvider
             settings["Audience"],
             claims,
             null,
-            DateTime.UtcNow.AddHours(2),
+            DateTime.UtcNow.Add(
+                TimeSpan.Parse(
+                    _configuration.GetSection("JwtSettings:ExpiryTime").Value!
+                    )
+                ),
             signingCredentials
             );
 
