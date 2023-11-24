@@ -1,4 +1,4 @@
-﻿namespace Application.Users;
+﻿namespace Application.Authorization;
 
 public interface IHashProvider
 {

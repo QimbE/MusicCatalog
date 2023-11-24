@@ -3,14 +3,13 @@ using Application.Artists.Delete;
 using Application.Artists.Get;
 using Application.Artists.GetAll;
 using Application.Artists.Update;
-using Application.Behaviors;
+using Application.Authorization.Login;
+using Application.Authorization.Register;
 using Application.Common;
-using Application.Users.Login;
-using Application.Users.Register;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.DIExtensions;
+namespace Application.Behaviors;
 
 internal static class RegisterBehaviors
 {

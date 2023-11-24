@@ -1,5 +1,5 @@
-﻿using Application.Data;
-using Application.Users;
+﻿using Application.Authorization;
+using Application.Data;
 using Domain.Artists;
 using Domain.Users;
 using Infrastructure.Authentication;

@@ -1,7 +1,6 @@
-﻿using Application.ExceptionHandling.ExpectedErrors;
-using Application.Users;
-using Application.Users.Login;
-using Application.Users.Register;
+﻿using Application.Authorization.Login;
+using Application.Authorization.Register;
+using Application.ExceptionHandling.ExpectedErrors;
 using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

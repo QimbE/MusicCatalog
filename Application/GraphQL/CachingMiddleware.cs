@@ -1,7 +1,7 @@
 ﻿using Application.Data;
 using HotChocolate.Execution;
 
-namespace Application.Behaviors;
+namespace Application.GraphQL;
 
 /// <summary>
 /// Hot chocolate redis caching middleware

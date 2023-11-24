@@ -3,7 +3,7 @@ using Application.Behaviors;
 using HotChocolate.Execution.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.DIExtensions;
+namespace Application.GraphQL;
 
 public static class HotChocolateRegistration
 {

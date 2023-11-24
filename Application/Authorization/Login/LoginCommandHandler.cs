@@ -3,7 +3,7 @@ using Application.Common;
 using Domain.Users;
 using MediatR;
 
-namespace Application.Users.Login;
+namespace Application.Authorization.Login;
 
 public sealed class LoginCommandHandler:IRequestHandler<LoginCommand, ResultType<string>>
 {

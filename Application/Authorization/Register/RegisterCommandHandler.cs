@@ -1,11 +1,10 @@
-﻿using System.Data;
-using Application.Common;
+﻿using Application.Common;
 using Application.Data;
 using Domain.Users;
 using Domain.Users.Exceptions;
 using MediatR;
 
-namespace Application.Users.Register;
+namespace Application.Authorization.Register;
 
 public class RegisterCommandHandler: IRequestHandler<RegisterCommand, ResultType<string>>
 {

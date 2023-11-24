@@ -1,8 +1,9 @@
 ﻿using System.Text;
 using Application.Authorization;
+using Application.Behaviors;
 using Application.Common;
-using Application.DIExtensions;
 using Application.ExceptionHandling;
+using Application.GraphQL;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
