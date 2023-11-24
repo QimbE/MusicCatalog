@@ -1,4 +1,5 @@
 ﻿using Domain.Primitives;
+using Domain.Releases;
 
 namespace Domain.Artists;
 
@@ -13,6 +14,8 @@ public sealed class Artist : Entity
     /// Description of an Artist.
     /// </summary>
     public string? Description { get; private set; }
+    
+    public List<Release> Releases { get; set; }
     
     /// <summary>
     /// Creates a new instance of Artis with preinstantiated Id.
