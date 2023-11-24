@@ -1,6 +1,4 @@
-﻿using Application.Artists;
-using Application.Behaviors;
-using Application.GraphQL.TypeConfigurations;
+﻿using Application.GraphQL.TypeConfigurations;
 using HotChocolate.Execution.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +9,7 @@ public static class HotChocolateRegistration
     public static IRequestExecutorBuilder ConfigureHotChocolateTypes(this IRequestExecutorBuilder builder)
     {
         return builder
-            .AddQueryType<ArtistsQL>()
+            .AddQueryType<Endpoint>()
             .AddType<ReleaseTypeType>()
             .AddProjections()
             .AddSorting()
