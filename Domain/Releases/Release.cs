@@ -1,5 +1,6 @@
 ﻿using Domain.Artists;
 using Domain.Primitives;
+using Domain.Songs;
 
 namespace Domain.Releases;
 
@@ -21,9 +22,9 @@ public class Release: Entity
 
     public DateOnly ReleaseDate { get; protected set; } = DateOnly.FromDateTime(DateTime.UtcNow);
     
-    public string LinkToCover { get; private set; }
+    public string LinkToCover { get; protected set; }
     
-    // todo: add tracklist
+    public List<Song> Songs { get; protected set; }
 
     private Release()
     {

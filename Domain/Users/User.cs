@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Domain.Primitives;
+using Domain.Songs;
 
 namespace Domain.Users;
 
@@ -14,6 +15,9 @@ public class User: Entity
 
     public Role Role { get; private set; }
     public int RoleId { get; private set; }
+    
+    
+    public List<Song> FavouriteSongs { get; protected set; }
 
     private User(string username, string email, string password, int roleId)
         :base(Guid.NewGuid())
