@@ -1,4 +1,5 @@
 ﻿using Application.Artists.Get;
+using Application.DTO;
 using Domain.Artists;
 using Domain.Exceptions;
 using FluentValidation.Results;

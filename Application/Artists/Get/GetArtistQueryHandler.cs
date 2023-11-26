@@ -1,5 +1,6 @@
 ﻿using Application.Common;
 using Application.Data;
+using Application.DTO;
 using Domain.Artists;
 using Domain.Artists.Exceptions;
 using Domain.Exceptions;

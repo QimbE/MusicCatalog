@@ -6,6 +6,7 @@ using Application.Artists.Update;
 using Application.Authorization.Login;
 using Application.Authorization.Register;
 using Application.Common;
+using Application.DTO;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 

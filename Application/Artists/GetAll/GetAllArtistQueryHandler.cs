@@ -1,6 +1,7 @@
 ﻿using Application.Artists.Get;
 using Application.Common;
 using Application.Data;
+using Application.DTO;
 using Domain.Artists.Exceptions;
 using MediatR;
 
