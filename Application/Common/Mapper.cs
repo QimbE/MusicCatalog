@@ -1,5 +1,6 @@
 ﻿using Application.Artists.Get;
 using Application.DTO;
+using Application.DTO.Artist;
 using Application.DTO.Release;
 using Application.Releases.Create;
 using Domain.Artists;
@@ -14,6 +15,7 @@ namespace Application.Common;
 public partial class Mapper : IMapper
 {
     public partial IEnumerable<PropertyError> MapToErrors(IEnumerable<ValidationFailure> failures);
+    public partial IQueryable<ArtistResponse> MapToResponse(IQueryable<Artist> query);
 
     public partial ArtistResponse MapToResponse(Artist artist);
     

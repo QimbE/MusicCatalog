@@ -1,6 +1,7 @@
 ﻿using Application.Common;
 using Application.Data;
 using Application.DTO;
+using Application.DTO.Artist;
 using Domain.Artists;
 using Domain.Artists.Exceptions;
 using Domain.Exceptions;
@@ -32,9 +33,10 @@ public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Resul
             return artist;
         }
         
-        artist = await _context.Artists
+        artist = await _mapper.MapToResponse(_context.Artists
             .Where(a => a.Id == request.Id)
-            .Select(a => _mapper.MapToResponse(a))
+            .Include(a => a.Releases)
+            .ThenInclude(r => r.Type))
             .FirstOrDefaultAsync(cancellationToken);
 
         if (artist is null)

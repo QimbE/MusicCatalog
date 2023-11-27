@@ -19,12 +19,6 @@ internal sealed class ArtistRepository : IArtistRepository
             .SingleOrDefaultAsync(a => a.Id == id, cancellationToken);
     }
 
-    public Task<Artist?> GetArtistByNameAsync(string name, CancellationToken cancellationToken = default)
-    {
-        return _context.Artists
-            .SingleOrDefaultAsync(a => a.Name == name, cancellationToken);
-    }
-
     public Task<bool> Any(Expression<Func<Artist, bool>> expression, CancellationToken cancellationToken = default)
     {
         return _context.Artists.AnyAsync(expression, cancellationToken);

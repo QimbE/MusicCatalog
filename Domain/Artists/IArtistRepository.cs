@@ -5,8 +5,6 @@ namespace Domain.Artists;
 public interface IArtistRepository
 {
     Task<Artist?> GetArtistByIdAsync(Guid id, CancellationToken cancellationToken = default);
-
-    Task<Artist?> GetArtistByNameAsync(string name, CancellationToken cancellationToken = default);
     
     Task<bool> Any(Expression<Func<Artist, bool>> expression, CancellationToken cancellationToken = default);
     

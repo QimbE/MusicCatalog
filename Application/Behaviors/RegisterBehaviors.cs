@@ -1,12 +1,12 @@
 ﻿using Application.Artists.Create;
 using Application.Artists.Delete;
 using Application.Artists.Get;
-using Application.Artists.GetAll;
 using Application.Artists.Update;
 using Application.Authorization.Login;
 using Application.Authorization.Register;
 using Application.Common;
 using Application.DTO;
+using Application.DTO.Artist;
 using Application.DTO.Release;
 using Application.Releases.Create;
 using Application.Releases.Get;
@@ -38,7 +38,6 @@ internal static class RegisterBehaviors
             .AddLoggingBehavior<UpdateArtistCommand, bool>()
             .AddLoggingBehavior<RegisterCommand, string>()
             .AddLoggingBehavior<LoginCommand, string>()
-            .AddLoggingBehavior<GetAllArtistsQuery, IEnumerable<ArtistResponse>>()
             .AddLoggingBehavior<GetReleaseQuery, ReleaseResponse>()
             .AddLoggingBehavior<CreateReleaseCommand, Guid>();
     }
