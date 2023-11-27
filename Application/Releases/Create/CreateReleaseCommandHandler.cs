@@ -12,14 +12,12 @@ public sealed class CreateReleaseCommandHandler: IRequestHandler<CreateReleaseCo
     private readonly IReleaseRepository _releaseRepository;
     private readonly IArtistRepository _artistRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ICacheService _cache;
     private readonly IMapper _mapper;
 
-    public CreateReleaseCommandHandler(IReleaseRepository releaseRepository, IUnitOfWork unitOfWork, ICacheService cache, IMapper mapper, IArtistRepository artistRepository)
+    public CreateReleaseCommandHandler(IReleaseRepository releaseRepository, IUnitOfWork unitOfWork, IMapper mapper, IArtistRepository artistRepository)
     {
         _releaseRepository = releaseRepository;
         _unitOfWork = unitOfWork;
-        _cache = cache;
         _mapper = mapper;
         _artistRepository = artistRepository;
     }
@@ -37,13 +35,6 @@ public sealed class CreateReleaseCommandHandler: IRequestHandler<CreateReleaseCo
         _releaseRepository.Add(release);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
-        await _cache.SetDataAsync(
-            CachingKeys.ReleaseResponsePrefix + release.Id,
-            _mapper.MapToResponse(release),
-            DateTimeOffset.UtcNow.AddMinutes(1),
-            cancellationToken
-        );
 
         return release.Id;
     }

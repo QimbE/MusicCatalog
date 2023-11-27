@@ -11,15 +11,11 @@ public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCom
 {
     private readonly IArtistRepository _artistRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ICacheService _cache;
-    private readonly IMapper _mapper;
 
-    public CreateArtistCommandHandler(IArtistRepository artistRepository, IUnitOfWork unitOfWork, ICacheService cache, IMapper mapper)
+    public CreateArtistCommandHandler(IArtistRepository artistRepository, IUnitOfWork unitOfWork)
     {
         _artistRepository = artistRepository;
         _unitOfWork = unitOfWork;
-        _cache = cache;
-        _mapper = mapper;
     }
 
     public async Task<ResultType<Guid>> Handle(CreateArtistCommand request, CancellationToken cancellationToken)
@@ -34,14 +30,6 @@ public sealed class CreateArtistCommandHandler : IRequestHandler<CreateArtistCom
         _artistRepository.Add(artist);
         
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        // caching
-        await _cache.SetDataAsync(
-            CachingKeys.ArtistResponsePrefix + artist.Id,
-            _mapper.MapToResponse(artist),
-            DateTimeOffset.UtcNow.AddMinutes(1),
-            cancellationToken
-        );
         
         return artist.Id;
     }
