@@ -13,11 +13,13 @@ public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Resul
 {
     private readonly IApplicationDbContext _context;
     private readonly ICacheService _cache;
+    private readonly IMapper _mapper;
 
-    public GetArtistQueryHandler(IApplicationDbContext context, ICacheService cache)
+    public GetArtistQueryHandler(IApplicationDbContext context, ICacheService cache, IMapper mapper)
     {
         _context = context;
         _cache = cache;
+        _mapper = mapper;
     }
 
 
@@ -32,7 +34,7 @@ public sealed class GetArtistQueryHandler: IRequestHandler<GetArtistQuery, Resul
         
         artist = await _context.Artists
             .Where(a => a.Id == request.Id)
-            .Select(a => new ArtistResponse(a.Id, a.Name, a.Description))
+            .Select(a => _mapper.MapToResponse(a))
             .FirstOrDefaultAsync(cancellationToken);
 
         if (artist is null)
