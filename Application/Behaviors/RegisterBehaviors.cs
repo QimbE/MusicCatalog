@@ -7,6 +7,9 @@ using Application.Authorization.Login;
 using Application.Authorization.Register;
 using Application.Common;
 using Application.DTO;
+using Application.DTO.Release;
+using Application.Releases.Create;
+using Application.Releases.Get;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -35,7 +38,9 @@ internal static class RegisterBehaviors
             .AddLoggingBehavior<UpdateArtistCommand, bool>()
             .AddLoggingBehavior<RegisterCommand, string>()
             .AddLoggingBehavior<LoginCommand, string>()
-            .AddLoggingBehavior<GetAllArtistsQuery, IEnumerable<ArtistResponse>>();
+            .AddLoggingBehavior<GetAllArtistsQuery, IEnumerable<ArtistResponse>>()
+            .AddLoggingBehavior<GetReleaseQuery, ReleaseResponse>()
+            .AddLoggingBehavior<CreateReleaseCommand, Guid>();
     }
 
     /// <summary>
@@ -48,7 +53,8 @@ internal static class RegisterBehaviors
         return config
             .AddValidationBehavior<CreateArtistCommand, Guid>()
             .AddValidationBehavior<UpdateArtistCommand, bool>()
-            .AddValidationBehavior<RegisterCommand, string>();
+            .AddValidationBehavior<RegisterCommand, string>()
+            .AddValidationBehavior<CreateReleaseCommand, Guid>();
     }
 
     /// <summary>

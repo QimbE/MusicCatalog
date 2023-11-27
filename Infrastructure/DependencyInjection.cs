@@ -1,6 +1,7 @@
 ﻿using Application.Authorization;
 using Application.Data;
 using Domain.Artists;
+using Domain.Releases;
 using Domain.Users;
 using Infrastructure.Authentication;
 using Infrastructure.Caching;
@@ -28,6 +29,8 @@ public static class DependencyInjection
         services.AddScoped<IArtistRepository, ArtistRepository>();
 
         services.AddScoped<IUserRepository, UserRepository>();
+
+        services.AddScoped<IReleaseRepository, ReleaseRepository>();
 
         services.AddScoped<IJwtProvider, JwtProvider>();
 
