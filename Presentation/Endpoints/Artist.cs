@@ -16,7 +16,7 @@ public class Artist : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("artists");
+        var group = app.MapGroup("artists").WithTags("Artists");
         
         group.MapPost("", async ([FromBody] CreateArtistCommand command, ISender sender, CancellationToken cancellationToken) =>
         {

@@ -14,7 +14,7 @@ public class User: ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("users");
+        var group = app.MapGroup("users").WithTags("Authentication");
 
         group.MapPost("login", async ([FromBody] LoginCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
