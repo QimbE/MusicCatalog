@@ -1,6 +1,7 @@
 ﻿using Application.ExceptionHandling.ExpectedErrors;
 using Application.Releases.Create;
 using Application.Releases.Get;
+using Application.Releases.Update;
 using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,16 @@ public class Release : ICarterModule
 
             return await result.MatchAsync<IResult>(
                 res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
+                errors => sender.Send(new HandleErrorQuery(errors))
+                );
+        });
+
+        group.MapPut("", async ([FromBody] UpdateReleaseCommand request, ISender sender, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(request, cancellationToken);
+
+            return await result.MatchAsync<IResult>(
+                res => Task.FromResult(Results.Ok(new {Message = "Success"})),
                 errors => sender.Send(new HandleErrorQuery(errors))
                 );
         });
