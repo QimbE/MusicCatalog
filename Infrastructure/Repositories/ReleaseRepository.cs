@@ -1,4 +1,5 @@
 ﻿using Domain.Releases;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
@@ -9,6 +10,12 @@ public class ReleaseRepository: IReleaseRepository
     public ReleaseRepository(ApplicationDbContext context)
     {
         _context = context;
+    }
+
+    public Task<Release?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return _context.Releases
+            .SingleOrDefaultAsync(a => a.Id == id, cancellationToken);
     }
 
     public void Add(Release release)
