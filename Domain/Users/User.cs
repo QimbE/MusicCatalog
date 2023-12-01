@@ -19,6 +19,11 @@ public class User: Entity
     
     public List<Song> FavouriteSongs { get; protected set; }
 
+    private User()
+    {
+        
+    }
+
     private User(string username, string email, string password, int roleId)
         :base(Guid.NewGuid())
     {
