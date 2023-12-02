@@ -1,4 +1,5 @@
-﻿using Domain.Songs;
+﻿using Domain.Junction;
+using Domain.Songs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -36,7 +37,17 @@ public class SongConfiguration: IEntityTypeConfiguration<Song>
 
         builder
             .HasMany(s => s.ArtistsOnFeat)
-            .WithMany(a => a.SongsOnFeat);
+            .WithMany(a => a.SongsOnFeat)
+            .UsingEntity<SongArtist>(
+                sa => sa
+                    .HasOne(sa => sa.Artist)
+                    .WithMany(a => a.SongArtists)
+                    .HasForeignKey(sa => sa.ArtistId),
+                sa => sa
+                    .HasOne(sa => sa.Song)
+                    .WithMany(s => s.SongArtists)
+                    .HasForeignKey(sa => sa.SongId)
+                );
 
         builder
             .HasMany(s => s.UsersWhoAdded)

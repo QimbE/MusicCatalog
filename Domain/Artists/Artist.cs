@@ -1,4 +1,5 @@
-﻿using Domain.Primitives;
+﻿using Domain.Junction;
+using Domain.Primitives;
 using Domain.Releases;
 using Domain.Songs;
 
@@ -19,6 +20,8 @@ public sealed class Artist : Entity
     public List<Release> Releases { get; protected set; }
     
     public List<Song> SongsOnFeat { get; protected set; } 
+    
+    public List<SongArtist> SongArtists { get; set; }
     
     /// <summary>
     /// Creates a new instance of Artis with preinstantiated Id.

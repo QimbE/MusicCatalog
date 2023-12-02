@@ -1,4 +1,5 @@
 ﻿using Domain.Artists;
+using Domain.Junction;
 using Domain.Primitives;
 using Domain.Releases;
 using Domain.Users;
@@ -24,6 +25,8 @@ public class Song: Entity
     
     public List<Artist> ArtistsOnFeat { get; protected set; }
     
+    public List<SongArtist> SongArtists { get; set; }
+    
     public List<User> UsersWhoAdded { get; protected set; }
     
     protected Song()
@@ -32,25 +35,44 @@ public class Song: Entity
         
     }
 
-    protected Song(Guid releaseId, Guid genreId, string name, string audioLink)
+    protected Song(Guid releaseId, Guid genreId, string name, string audioLink, List<Guid> artistsOnFeatIds)
         :base(Guid.NewGuid())
     {
         ReleaseId = releaseId;
         GenreId = genreId;
         Name = name;
         AudioLink = audioLink;
+        SongArtists = IdsToEntity(artistsOnFeatIds);
     }
 
-    public void Update(Guid releaseId, Guid genreId, string name, string audioLink)
+    public void Update(Guid releaseId, Guid genreId, string name, string audioLink, List<Guid> artistsOnFeatIds)
     {
         ReleaseId = releaseId;
         GenreId = genreId;
         Name = name;
         AudioLink = audioLink;
+        SongArtists = IdsToEntity(artistsOnFeatIds);
     }
 
-    public static Song Create(Guid releaseId, Guid genreId, string name, string audioLink)
+    public static Song Create(Guid releaseId, Guid genreId, string name, string audioLink, List<Guid> artistsOnFeatIds)
     {
-        return new Song(releaseId, genreId, name, audioLink);
+        return new Song(releaseId, genreId, name, audioLink, artistsOnFeatIds);
+    }
+
+    private List<SongArtist> IdsToEntity(List<Guid> artistsOnFeatIds)
+    {
+        if (artistsOnFeatIds is null)
+        {
+            throw new ArgumentNullException();
+        }
+
+        var songArtists = new List<SongArtist>();
+        
+        foreach (var artistId in artistsOnFeatIds)
+        {
+            songArtists.Add(new SongArtist(this.Id, artistId));
+        }
+
+        return songArtists;
     }
 }
