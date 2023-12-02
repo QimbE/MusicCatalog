@@ -1,4 +1,5 @@
-﻿using Domain.Releases;
+﻿using System.Linq.Expressions;
+using Domain.Releases;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
@@ -16,6 +17,11 @@ public class ReleaseRepository: IReleaseRepository
     {
         return _context.Releases
             .SingleOrDefaultAsync(a => a.Id == id, cancellationToken);
+    }
+
+    public Task<bool> Any(Expression<Func<Release, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        return _context.Releases.AnyAsync(expression, cancellationToken);
     }
 
     public void Add(Release release)

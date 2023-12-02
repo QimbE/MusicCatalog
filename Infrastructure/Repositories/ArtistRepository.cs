@@ -24,6 +24,11 @@ internal sealed class ArtistRepository : IArtistRepository
         return _context.Artists.AnyAsync(expression, cancellationToken);
     }
 
+    public Task<int> Count(Expression<Func<Artist, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        return _context.Artists.CountAsync(expression, cancellationToken);
+    }
+
     public void Add(Artist artist)
     {
         _context.Artists.Add(artist);
