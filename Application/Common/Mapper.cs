@@ -3,9 +3,11 @@ using Application.DTO;
 using Application.DTO.Artist;
 using Application.DTO.Release;
 using Application.Releases.Create;
+using Application.Songs.Create;
 using Domain.Artists;
 using Domain.Exceptions;
 using Domain.Releases;
+using Domain.Songs;
 using FluentValidation.Results;
 using Riok.Mapperly.Abstractions;
 
@@ -25,5 +27,10 @@ public partial class Mapper : IMapper
     {
         return Release.Create(request.Name, request.Description, request.ReleaseDate, request.LinkToCover,
             request.AuthorId, request.TypeId);
+    }
+
+    public Song MapToEntity(CreateSongCommand request)
+    {
+        return Song.Create(request.ReleaseId, request.GenreId, request.Name, request.AudioLink, request.ArtistOnFeatIds);
     }
 }

@@ -2,6 +2,7 @@
 using System.Security.Authentication;
 using Domain.Artists.Exceptions;
 using Domain.Exceptions;
+using Domain.Songs.Exceptions;
 using Domain.Users.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -21,6 +22,7 @@ public class HandleErrorQueryHandler: IRequestHandler<HandleErrorQuery, IResult>
             UserWithTheSameEmailException e => (StatusCodes.Status409Conflict, e.Message, null),
             ValidationFailureException e => ValidationFailureToResponse(e),
             InvalidCredentialException e => (StatusCodes.Status400BadRequest, e.Message, null),
+            AuthorOnFeatException e => (StatusCodes.Status400BadRequest, e.Message, null),
             DuplicateNameException e => (StatusCodes.Status409Conflict, e.Message, null),
             _ => (StatusCodes.Status500InternalServerError, "An unexpected error occured.", null)
         };

@@ -11,6 +11,7 @@ using Application.DTO.Release;
 using Application.Releases.Create;
 using Application.Releases.Get;
 using Application.Releases.Update;
+using Application.Songs.Create;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -42,7 +43,8 @@ internal static class RegisterBehaviors
             .AddLoggingBehavior<GetReleaseQuery, ReleaseResponse>()
             .AddLoggingBehavior<CreateReleaseCommand, Guid>()
             .AddLoggingBehavior<UpdateReleaseCommand, bool>()
-            .AddLoggingBehavior<DeleteArtistCommand, bool>();
+            .AddLoggingBehavior<DeleteArtistCommand, bool>()
+            .AddLoggingBehavior<CreateSongCommand, Guid>();
     }
 
     /// <summary>
@@ -57,7 +59,8 @@ internal static class RegisterBehaviors
             .AddValidationBehavior<UpdateArtistCommand, bool>()
             .AddValidationBehavior<RegisterCommand, string>()
             .AddValidationBehavior<CreateReleaseCommand, Guid>()
-            .AddValidationBehavior<UpdateReleaseCommand, bool>();
+            .AddValidationBehavior<UpdateReleaseCommand, bool>()
+            .AddValidationBehavior<CreateSongCommand, Guid>();
     }
 
     /// <summary>
