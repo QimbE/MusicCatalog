@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Presentation.Endpoints;
 
-public class User: ICarterModule
+public class Authentication: ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("users").WithTags("Authentication");
+        var group = app.MapGroup("Authentication").WithTags("Authentication");
 
         group.MapPost("login", async ([FromBody] LoginCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
