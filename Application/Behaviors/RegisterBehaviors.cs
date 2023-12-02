@@ -41,7 +41,8 @@ internal static class RegisterBehaviors
             .AddLoggingBehavior<LoginCommand, string>()
             .AddLoggingBehavior<GetReleaseQuery, ReleaseResponse>()
             .AddLoggingBehavior<CreateReleaseCommand, Guid>()
-            .AddLoggingBehavior<UpdateReleaseCommand, bool>();
+            .AddLoggingBehavior<UpdateReleaseCommand, bool>()
+            .AddLoggingBehavior<DeleteArtistCommand, bool>();
     }
 
     /// <summary>
