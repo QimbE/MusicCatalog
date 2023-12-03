@@ -43,7 +43,7 @@ public class Release : ICarterModule
             var result = await sender.Send(request, cancellationToken);
 
             return await result.MatchAsync<IResult>(
-                res => Task.FromResult(Results.Ok(new {Message = "Success"})),
+                res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
                 );
         });
@@ -55,7 +55,7 @@ public class Release : ICarterModule
             var result = await sender.Send(request, cancellationToken);
 
             return await result.MatchAsync<IResult>(
-                res => Task.FromResult(Results.Ok(new { Message = "Success" })),
+                res => Task.FromResult(Results.Ok(new { Message = "Success", Data = res })),
                 errors => sender.Send(new HandleErrorQuery(errors))
             );
         });

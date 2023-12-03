@@ -16,7 +16,7 @@ public class Artist : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("artists").WithTags("Artists");
+        var group = app.MapGroup("Artists").WithTags("Artists");
         
         group.MapPost("", async ([FromBody] CreateArtistCommand command, ISender sender, CancellationToken cancellationToken) =>
         {
@@ -45,7 +45,7 @@ public class Artist : ICarterModule
                 var result = await sender.Send(command, cancellationToken);
 
                 return await result.MatchAsync<IResult>(
-                    res => Task.FromResult(Results.Ok(new {Message = "Success"})),
+                    res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                     errors => sender.Send(new HandleErrorQuery(errors))
                 );
             });
@@ -55,7 +55,7 @@ public class Artist : ICarterModule
             var result = await sender.Send(new DeleteArtistCommand(id), cancellationToken);
 
             return await result.MatchAsync<IResult>(
-                res => Task.FromResult(Results.Ok(new {Message = "Success"})),
+                res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
             );
         });
