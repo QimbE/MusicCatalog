@@ -1,5 +1,6 @@
 ﻿using Application.ExceptionHandling.ExpectedErrors;
 using Application.Genres.Create;
+using Application.Genres.Update;
 using Carter;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -20,7 +21,17 @@ public class Genre:ICarterModule
             var result = await sender.Send(request, cancellationToken);
 
             return await result.MatchAsync<IResult>(
-                res => Task.FromResult(Results.Ok(new {Message = "Success"})),
+                res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
+                errors => sender.Send(new HandleErrorQuery(errors))
+            );
+        });
+        
+        group.MapPut("", async ([FromBody] UpdateGenreCommand request, ISender sender, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(request, cancellationToken);
+
+            return await result.MatchAsync<IResult>(
+                res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
             );
         });

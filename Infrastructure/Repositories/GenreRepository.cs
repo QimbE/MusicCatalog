@@ -13,6 +13,11 @@ public class GenreRepository: IGenreRepository
         _context = context;
     }
 
+    public Task<Genre?> GetById(Guid id, CancellationToken cancellationToken = default)
+    {
+        return _context.Genres.SingleOrDefaultAsync(g => g.Id == id, cancellationToken);
+    }
+
     public Task<bool> Any(Expression<Func<Genre, bool>> expression, CancellationToken cancellationToken = default)
     {
         return _context.Genres.AnyAsync(expression, cancellationToken);
