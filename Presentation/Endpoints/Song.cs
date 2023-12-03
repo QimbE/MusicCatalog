@@ -1,5 +1,6 @@
 ﻿using Application.ExceptionHandling.ExpectedErrors;
 using Application.Songs.Create;
+using Application.Songs.Delete;
 using Application.Songs.Update;
 using Carter;
 using MediatR;
@@ -26,16 +27,24 @@ public class Song: ICarterModule
             );
         });
 
-        group.MapPut("",
-            async ([FromBody] UpdateSongCommand request, ISender sender,
-                CancellationToken cancellationToken) =>
-            {
-                var result = await sender.Send(request, cancellationToken);
+        group.MapPut("", async ([FromBody] UpdateSongCommand request, ISender sender, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(request, cancellationToken);
             
-                return await result.MatchAsync<IResult>(
-                    res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
-                    errors => sender.Send(new HandleErrorQuery(errors))
+            return await result.MatchAsync<IResult>(
+                res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
+                errors => sender.Send(new HandleErrorQuery(errors))
                 );
-            });
+        });
+
+        group.MapDelete("", async ([FromBody] DeleteSongCommand request, ISender sender, CancellationToken cancellationToken) =>
+        {
+            var result = await sender.Send(request, cancellationToken);
+            
+            return await result.MatchAsync<IResult>(
+                res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
+                errors => sender.Send(new HandleErrorQuery(errors))
+            );
+        });
     }
 }
