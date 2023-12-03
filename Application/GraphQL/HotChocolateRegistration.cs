@@ -12,6 +12,7 @@ public static class HotChocolateRegistration
             .AddQueryType<Endpoint>()
             .AddType<ReleaseTypeType>()
             .AddType<RoleType>()
+            .AddType<UserType>()
             .AddProjections()
             .AddSorting()
             .AddFiltering()

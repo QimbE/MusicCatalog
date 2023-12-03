@@ -2,6 +2,8 @@
 using Domain.Artists;
 using Domain.Releases;
 using Domain.Songs;
+using Domain.Users;
+using HotChocolate.Authorization;
 
 namespace Application.GraphQL;
 
@@ -45,6 +47,16 @@ public class Endpoint
     public async Task<IQueryable<Genre>> GetGenres([Service(ServiceKind.Resolver)] IApplicationDbContext context, CancellationToken cancellationToken)
     {
         return context.Genres;
+    }
+    
+    [UsePaging(IncludeTotalCount = true)]
+    [UseProjection]
+    [UseFiltering]
+    [UseSorting]
+    // [Authorize(Role.RoleNames.Admin)]
+    public async Task<IQueryable<User>> GetUsers([Service(ServiceKind.Resolver)] IApplicationDbContext context, CancellationToken cancellationToken)
+    {
+        return context.Users;
     }
 }
 
