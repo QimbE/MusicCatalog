@@ -29,6 +29,8 @@ public class Song: Entity
     
     public List<User> UsersWhoAdded { get; protected set; }
     
+    public List<SongUser> SongUsers { get; protected set; }
+    
     protected Song()
         :base(Guid.NewGuid())
     {

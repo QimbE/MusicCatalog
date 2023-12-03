@@ -51,6 +51,15 @@ public class SongConfiguration: IEntityTypeConfiguration<Song>
 
         builder
             .HasMany(s => s.UsersWhoAdded)
-            .WithMany(u => u.FavouriteSongs);
+            .WithMany(u => u.FavouriteSongs).UsingEntity<SongUser>(
+                sa => sa
+                    .HasOne(sa => sa.User)
+                    .WithMany(u => u.SongUsers)
+                    .HasForeignKey(sa => sa.UserId),
+                sa => sa
+                    .HasOne(sa => sa.Song)
+                    .WithMany(s => s.SongUsers)
+                    .HasForeignKey(sa => sa.SongId)
+                );
     }
 }

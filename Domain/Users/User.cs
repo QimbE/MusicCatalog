@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Domain.Junction;
 using Domain.Primitives;
 using Domain.Songs;
 
@@ -18,6 +19,8 @@ public class User: Entity
     
     
     public List<Song> FavouriteSongs { get; protected set; }
+    
+    public List<SongUser> SongUsers { get; protected set; }
 
     private User()
     {
