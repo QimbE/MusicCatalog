@@ -30,6 +30,11 @@ public class UserRepository: IUserRepository
         return set.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
     }
 
+    public Task<User?> GetById(Guid id, CancellationToken cancellationToken = default)
+    {
+        return _context.Users.SingleOrDefaultAsync(u => u.Id == id, cancellationToken);
+    }
+
     public void Add(User user)
     {
         _context.Users.Add(user);
