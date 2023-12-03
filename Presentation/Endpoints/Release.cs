@@ -1,9 +1,11 @@
-﻿using Application.ExceptionHandling.ExpectedErrors;
+﻿using Application.Authorization;
+using Application.ExceptionHandling.ExpectedErrors;
 using Application.Releases.Create;
 using Application.Releases.Delete;
 using Application.Releases.Get;
 using Application.Releases.Update;
 using Carter;
+using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +18,7 @@ public class Release : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("Releases").WithTags("Releases");
+        var group = app.MapGroup("Releases").WithTags("Releases").UserShouldBeAtLeast(Role.DatabaseAdmin);
 
         group.MapGet("{id:guid}", async ([FromRoute] Guid id, ISender sender, CancellationToken cancellationToken) =>
         {

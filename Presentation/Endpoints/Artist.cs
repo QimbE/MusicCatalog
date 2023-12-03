@@ -2,8 +2,10 @@
 using Application.Artists.Delete;
 using Application.Artists.Get;
 using Application.Artists.Update;
+using Application.Authorization;
 using Application.ExceptionHandling.ExpectedErrors;
 using Carter;
+using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +18,7 @@ public class Artist : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("Artists").WithTags("Artists");
+        var group = app.MapGroup("Artists").WithTags("Artists").UserShouldBeAtLeast(Role.DatabaseAdmin);
         
         group.MapPost("", async ([FromBody] CreateArtistCommand command, ISender sender, CancellationToken cancellationToken) =>
         {

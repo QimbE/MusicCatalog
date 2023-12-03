@@ -1,8 +1,10 @@
-﻿using Application.ExceptionHandling.ExpectedErrors;
+﻿using Application.Authorization;
+using Application.ExceptionHandling.ExpectedErrors;
 using Application.Songs.Create;
 using Application.Songs.Delete;
 using Application.Songs.Update;
 using Carter;
+using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,7 +17,7 @@ public class Song: ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("Songs").WithTags("Songs");
+        var group = app.MapGroup("Songs").WithTags("Songs").UserShouldBeAtLeast(Role.DatabaseAdmin);
 
         group.MapPost("", async ([FromBody] CreateSongCommand request, ISender sender, CancellationToken cancellationToken) =>
         {

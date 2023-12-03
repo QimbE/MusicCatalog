@@ -13,7 +13,7 @@ public class Endpoint
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    // [Authorize(Role.RoleNames.Default)]
+    [Authorize(Role.RoleNames.Default)]
     public async Task<IQueryable<Artist>> GetArtists([Service(ServiceKind.Resolver)] IApplicationDbContext context, CancellationToken cancellationToken)
     {
         return context.Artists;
@@ -23,7 +23,7 @@ public class Endpoint
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    // [Authorize(Role.RoleNames.Default)]
+    [Authorize(Role.RoleNames.Default)]
     public async Task<IQueryable<Release>> GetReleases([Service(ServiceKind.Resolver)] IApplicationDbContext context, CancellationToken cancellationToken)
     {
         return context.Releases;
@@ -33,7 +33,7 @@ public class Endpoint
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    // [Authorize(Role.RoleNames.Default)]
+    [Authorize(Role.RoleNames.Default)]
     public async Task<IQueryable<Song>> GetSongs([Service(ServiceKind.Resolver)] IApplicationDbContext context, CancellationToken cancellationToken)
     {
         return context.Songs;
@@ -43,7 +43,7 @@ public class Endpoint
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    // [Authorize(Role.RoleNames.Default)]
+    [Authorize(Role.RoleNames.Default)]
     public async Task<IQueryable<Genre>> GetGenres([Service(ServiceKind.Resolver)] IApplicationDbContext context, CancellationToken cancellationToken)
     {
         return context.Genres;
@@ -53,7 +53,7 @@ public class Endpoint
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    // [Authorize(Role.RoleNames.Admin)]
+    [Authorize(Role.RoleNames.Admin)]
     public async Task<IQueryable<User>> GetUsers([Service(ServiceKind.Resolver)] IApplicationDbContext context, CancellationToken cancellationToken)
     {
         return context.Users;

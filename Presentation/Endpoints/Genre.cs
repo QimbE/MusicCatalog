@@ -1,7 +1,9 @@
-﻿using Application.ExceptionHandling.ExpectedErrors;
+﻿using Application.Authorization;
+using Application.ExceptionHandling.ExpectedErrors;
 using Application.Genres.Create;
 using Application.Genres.Update;
 using Carter;
+using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +16,7 @@ public class Genre:ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("Genres").WithTags("Genres");
+        var group = app.MapGroup("Genres").WithTags("Genres").UserShouldBeAtLeast(Role.DatabaseAdmin);
 
         group.MapPost("", async ([FromBody] CreateGenreCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
