@@ -17,4 +17,9 @@ public class GenreRepository: IGenreRepository
     {
         return _context.Genres.AnyAsync(expression, cancellationToken);
     }
+
+    public void Add(Genre genre)
+    {
+        _context.Genres.Add(genre);
+    }
 }

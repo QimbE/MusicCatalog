@@ -8,6 +8,7 @@ using Application.Common;
 using Application.DTO;
 using Application.DTO.Artist;
 using Application.DTO.Release;
+using Application.Genres.Create;
 using Application.Releases.Create;
 using Application.Releases.Get;
 using Application.Releases.Update;
@@ -48,7 +49,8 @@ internal static class RegisterBehaviors
             .AddLoggingBehavior<DeleteArtistCommand, bool>()
             .AddLoggingBehavior<CreateSongCommand, Guid>()
             .AddLoggingBehavior<UpdateSongCommand, bool>()
-            .AddLoggingBehavior<DeleteSongCommand, bool>();
+            .AddLoggingBehavior<DeleteSongCommand, bool>()
+            .AddLoggingBehavior<CreateGenreCommand, Guid>();
     }
 
     /// <summary>
@@ -65,7 +67,8 @@ internal static class RegisterBehaviors
             .AddValidationBehavior<CreateReleaseCommand, Guid>()
             .AddValidationBehavior<UpdateReleaseCommand, bool>()
             .AddValidationBehavior<CreateSongCommand, Guid>()
-            .AddValidationBehavior<UpdateSongCommand, bool>();
+            .AddValidationBehavior<UpdateSongCommand, bool>()
+            .AddValidationBehavior<CreateGenreCommand, Guid>();
     }
 
     /// <summary>
