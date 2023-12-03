@@ -1,6 +1,8 @@
-﻿using Application.ExceptionHandling.ExpectedErrors;
+﻿using Application.Authorization;
+using Application.ExceptionHandling.ExpectedErrors;
 using Application.Users.Update;
 using Carter;
+using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +15,7 @@ public class User:ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("Users").WithTags("Users");
+        var group = app.MapGroup("Users").WithTags("Users").UserShouldBeAtLeast(Role.Admin);
 
         group.MapPut("", async ([FromBody] UpdateUserCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
