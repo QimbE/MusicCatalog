@@ -1,4 +1,5 @@
 ﻿using Domain.Artists;
+using Domain.Junction;
 using Domain.Releases;
 using Domain.Songs;
 using Domain.Users;
@@ -17,6 +18,8 @@ public interface IApplicationDbContext
     DbSet<Genre> Genres { get; set; }
     
     DbSet<User> Users { get; set; }
+    
+    DbSet<SongUser> SongUsers { get; set; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken =default);
 }
