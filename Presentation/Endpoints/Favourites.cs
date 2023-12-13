@@ -19,7 +19,7 @@ public class Favourites:ICarterModule
     {
         var group = app.MapGroup("Favourites").WithTags("Favourites").UserShouldBeAtLeast(Role.Default);
 
-        group.MapPost("", async (HttpRequest request, [FromBody] Guid songId, ISender sender, CancellationToken cancellationToken) =>
+        group.MapPost("", async (HttpRequest request, [FromBody] AddToFavouritesRequest req, ISender sender, CancellationToken cancellationToken) =>
         {
             var userIdClaim = request.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
@@ -27,6 +27,8 @@ public class Favourites:ICarterModule
             {
                 return Results.Unauthorized();
             }
+
+            var songId = req.Id;
 
             var command = new AddToFavouritesCommand(Guid.Parse(userIdClaim.Value), songId);
             
@@ -38,7 +40,7 @@ public class Favourites:ICarterModule
             );
         });
 
-        group.MapDelete("", async (HttpRequest request, [FromBody] Guid songId, ISender sender, CancellationToken cancellationToken) =>
+        group.MapDelete("", async (HttpRequest request, [FromBody] RemoveFromFavouritesRequest req, ISender sender, CancellationToken cancellationToken) =>
         {
             var userIdClaim = request.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
@@ -46,6 +48,8 @@ public class Favourites:ICarterModule
             {
                 return Results.Unauthorized();
             }
+
+            var songId = req.Id;
 
             var command = new RemoveFromFavouritesCommand(Guid.Parse(userIdClaim.Value), songId);
             
