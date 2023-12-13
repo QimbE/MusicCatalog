@@ -16,6 +16,7 @@ using Application.Releases.Update;
 using Application.Songs.Create;
 using Application.Songs.Delete;
 using Application.Songs.Update;
+using Application.Users.Get;
 using Application.Users.Update;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,7 +55,8 @@ internal static class RegisterBehaviors
             .AddLoggingBehavior<DeleteSongCommand, bool>()
             .AddLoggingBehavior<CreateGenreCommand, Guid>()
             .AddLoggingBehavior<UpdateGenreCommand, bool>()
-            .AddLoggingBehavior<UpdateUserCommand, bool>();
+            .AddLoggingBehavior<UpdateUserCommand, bool>()
+            .AddLoggingBehavior<GetThisUserQuery, ThisUserDTO>();
     }
 
     /// <summary>
