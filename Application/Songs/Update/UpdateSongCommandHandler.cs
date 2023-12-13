@@ -7,6 +7,7 @@ using Domain.Releases.Exceptions;
 using Domain.Songs;
 using Domain.Songs.Exceptions;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Songs.Update;
 
@@ -17,19 +18,21 @@ public class UpdateSongCommandHandler:IRequestHandler<UpdateSongCommand, ResultT
     private readonly IArtistRepository _artistRepository;
     private readonly ISongRepository _songRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationDbContext _applicationDbContext;
 
-    public UpdateSongCommandHandler(IReleaseRepository releaseRepository, IGenreRepository genreRepository, IArtistRepository artistRepository, ISongRepository songRepository, IUnitOfWork unitOfWork)
+    public UpdateSongCommandHandler(IReleaseRepository releaseRepository, IGenreRepository genreRepository, IArtistRepository artistRepository, ISongRepository songRepository, IUnitOfWork unitOfWork, IApplicationDbContext applicationDbContext)
     {
         _releaseRepository = releaseRepository;
         _genreRepository = genreRepository;
         _artistRepository = artistRepository;
         _songRepository = songRepository;
         _unitOfWork = unitOfWork;
+        _applicationDbContext = applicationDbContext;
     }
 
     public async Task<ResultType<bool>> Handle(UpdateSongCommand request, CancellationToken cancellationToken)
     {
-        var song = await _songRepository.GetByIdAsync(request.Id, cancellationToken);
+        var song = await _applicationDbContext.Songs.Include(s => s.SongArtists).SingleOrDefaultAsync(s => s.Id == request.Id);
 
         if (song is null)
         {
@@ -61,6 +64,8 @@ public class UpdateSongCommandHandler:IRequestHandler<UpdateSongCommand, ResultT
         {
             return new ArtistNotFoundException(nameof(request.ArtistOnFeatIds));
         }
+        
+        song.SongArtists.Clear();
         
         song.Update(request.ReleaseId, request.GenreId, request.Name, request.AudioLink, request.ArtistOnFeatIds);
 
