@@ -25,6 +25,8 @@ public class Program
 
         builder.Host.UseSerilog((context, configuration) =>
             configuration.ReadFrom.Configuration(context.Configuration));
+
+        builder.Services.AddCors();
         
         var app = builder.Build();
 
@@ -35,6 +37,11 @@ public class Program
         }
         
         app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+        
+        app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
         
         app.UseHttpsRedirection();
 
