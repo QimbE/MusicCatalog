@@ -18,7 +18,7 @@ public class Release : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("Releases").WithTags("Releases").UserShouldBeAtLeast(Role.DatabaseAdmin);
+        var group = app.MapGroup("Releases").WithTags("Releases");
 
         group.MapGet("{id:guid}", async ([FromRoute] Guid id, ISender sender, CancellationToken cancellationToken) =>
         {
@@ -28,7 +28,7 @@ public class Release : ICarterModule
                 res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
             );
-        });
+        }).UserShouldBeAtLeast(Role.Default);
 
         group.MapPost("", async ([FromBody] CreateReleaseCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
@@ -38,7 +38,7 @@ public class Release : ICarterModule
                 res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
                 );
-        });
+        }).UserShouldBeAtLeast(Role.DatabaseAdmin);
 
         group.MapPut("", async ([FromBody] UpdateReleaseCommand request, ISender sender, CancellationToken cancellationToken) =>
         {
@@ -48,7 +48,7 @@ public class Release : ICarterModule
                 res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
                 );
-        });
+        }).UserShouldBeAtLeast(Role.DatabaseAdmin);
 
         group.MapDelete("{id:guid}", async ([FromRoute] Guid id, ISender sender, CancellationToken cancellationToken) =>
         {
@@ -60,6 +60,6 @@ public class Release : ICarterModule
                 res => Task.FromResult(Results.Ok(new { Message = "Success", Data = res })),
                 errors => sender.Send(new HandleErrorQuery(errors))
             );
-        });
+        }).UserShouldBeAtLeast(Role.DatabaseAdmin);
     }
 }

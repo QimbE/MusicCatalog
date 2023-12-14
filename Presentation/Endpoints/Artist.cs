@@ -18,7 +18,7 @@ public class Artist : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("Artists").WithTags("Artists").UserShouldBeAtLeast(Role.DatabaseAdmin);
+        var group = app.MapGroup("Artists").WithTags("Artists");
         
         group.MapPost("", async ([FromBody] CreateArtistCommand command, ISender sender, CancellationToken cancellationToken) =>
         {
@@ -28,7 +28,7 @@ public class Artist : ICarterModule
                 res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
                 );
-        });
+        }).UserShouldBeAtLeast(Role.DatabaseAdmin);
 
         group.MapGet("{id:guid}", async ([FromRoute] Guid id, ISender sender, CancellationToken cancellationToken) =>
         {
@@ -38,7 +38,7 @@ public class Artist : ICarterModule
                 res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
             );
-        });
+        }).UserShouldBeAtLeast(Role.Default);
 
         group.MapPut("{id:guid}", async ([FromRoute] Guid id, [FromBody] UpdateArtistRequest request, ISender sender, CancellationToken cancellationToken) =>
             {
@@ -50,7 +50,7 @@ public class Artist : ICarterModule
                     res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                     errors => sender.Send(new HandleErrorQuery(errors))
                 );
-            });
+            }).UserShouldBeAtLeast(Role.DatabaseAdmin);
 
         group.MapDelete("{id:guid}", async ([FromRoute] Guid id, ISender sender, CancellationToken cancellationToken) =>
         {
@@ -60,6 +60,6 @@ public class Artist : ICarterModule
                 res => Task.FromResult(Results.Ok(new {Message = "Success", Data = res})),
                 errors => sender.Send(new HandleErrorQuery(errors))
             );
-        });
+        }).UserShouldBeAtLeast(Role.DatabaseAdmin);
     }
 }
